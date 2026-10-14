@@ -1,11 +1,11 @@
-import {APP_VERSION,LIMITS,CATEGORIES,UNITS,STATES,COMPONENTS,blankRecipe,id,withRecipe,validateNotebook,searchRecipes,scaledQuantity,displayQuantity,exclusions} from './domain.js';
-import {NotebookStore,friendlyStorageError} from './storage.js';
-import {makeBackup,readBackup,prepareMerge} from './backup.js';
-import {preparePhoto,verifyPhotoDecoding} from './photos.js';
-import {exampleNotebook} from './examples.js';
-import {dayString,monday,shiftDay,remaining,timerAction,beginCooking,setMenu,rebuildShopping,harvestToReserve} from './workflows.js';
-import {esc,art,artwork,banner,flowers,coverDecor,frame,heading,section,action,tools} from './visual.js';
-import {capturePageTurn,playPageTurn} from './page-turn.js';
+import {APP_VERSION,LIMITS,CATEGORIES,UNITS,STATES,COMPONENTS,blankRecipe,id,withRecipe,validateNotebook,searchRecipes,scaledQuantity,displayQuantity,exclusions} from './domain.js?v=0.2.1';
+import {NotebookStore,friendlyStorageError} from './storage.js?v=0.2.1';
+import {makeBackup,readBackup,prepareMerge} from './backup.js?v=0.2.1';
+import {preparePhoto,verifyPhotoDecoding} from './photos.js?v=0.2.1';
+import {exampleNotebook} from './examples.js?v=0.2.1';
+import {dayString,monday,shiftDay,remaining,timerAction,beginCooking,setMenu,rebuildShopping,harvestToReserve} from './workflows.js?v=0.2.1';
+import {esc,art,artwork,banner,flowers,coverDecor,frame,heading,section,action,tools} from './visual.js?v=0.2.1';
+import {capturePageTurn,playPageTurn} from './page-turn.js?v=0.2.1';
 const main=document.querySelector('#app'),message=document.querySelector('#message'),store=new NotebookStore();
 let book,draft,dirty=false,busy=false,photoFile,removePhoto=false,stagedBackup,urls=[],lastRoute='#accueil',week=monday(),category='',searchQuery='',plantSpace='Pot',audioContext,wakeLock,expiredKey='';
 const servingsById=new Map();
@@ -157,7 +157,7 @@ function beep(){if(!book.settings.sound||!audioContext||audioContext.state!=='ru
 async function updateWakeLock(){if(!book?.settings.keepAwake||!location.hash.startsWith('#cuisine')||document.visibilityState!=='visible'){await wakeLock?.release().catch(()=>{});wakeLock=null;return;}if(wakeLock&&!wakeLock.released)return;const status=document.querySelector('#awake-status');if(!navigator.wakeLock?.request){if(status)status.textContent='Maintien de l’écran non disponible dans ce navigateur.';return;}try{wakeLock=await navigator.wakeLock.request('screen');if(status)status.textContent='Écran maintenu allumé tant que cette page reste visible.';}catch{if(status)status.textContent='Le téléphone a refusé le maintien de l’écran allumé.';}}
 function tick(){const t=book?.cooking?.timer;if(!t)return;const left=remaining(t);const output=document.querySelector('#timer-output'),label=document.querySelector('#timer-label');if(output)output.textContent=clock(left);if(label)label.textContent=left===0?'Temps écoulé':`Il reste ${clock(left)}`;const key=t.endAt;if(t.running&&left===0&&expiredKey!==key){expiredKey=key;beep();notice('Minuteur terminé. Vérifiez votre préparation.');}}
 function render(){
- if(!book)return;urls.forEach(URL.revokeObjectURL);urls=[];clearNotice();stagedBackup=null;dirty=false;draft=null;photoFile=undefined;removePhoto=false;
+ if(!book)return;const previousUrls=urls;urls=[];setTimeout(()=>previousUrls.forEach(URL.revokeObjectURL),1100);clearNotice();stagedBackup=null;dirty=false;draft=null;photoFile=undefined;removePhoto=false;
  const route=location.hash||'#accueil',[name,key]=route.slice(1).split('/');
  const turn=capturePageTurn(main,lastRoute,route),routeChanged=lastRoute!==route;lastRoute=route;
  const recipe=book.recipes.find(r=>r.id===key);
