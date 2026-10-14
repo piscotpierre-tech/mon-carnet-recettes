@@ -1,0 +1,11 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {readBackup,makeBackup} from '../src/backup.js';
+import {NotebookStore} from '../src/storage.js';
+import {MemoryIndexedDB} from './memory-indexeddb.mjs';
+const text=await readFile(new URL('./legacy-v1/backup-v1.json',import.meta.url),'utf8');
+const original=JSON.parse(text);
+test('un export réellement généré par le code 0.1.0 est importé en V2 sans perte',async()=>{const result=await readBackup(text),n=result.notebook;assert.equal(n.schemaVersion,2);assert.equal(n.revision,7);assert.deepEqual(n.recipes,original.payload.recipes);assert.equal(n.settings.apple,false);assert.equal(n.photos[0].blob.size,Buffer.from(original.payload.photos[0].data,'base64').length);assert.deepEqual(n.menus,[]);assert.equal(n.cooking,null);});
+test('une base locale V1 est lue sans écriture puis évolue au premier enregistrement',async()=>{const factory=new MemoryIndexedDB(),store=new NotebookStore({factory,scope:'/migration/'});await store.open();const decoded=(await readBackup(text)).notebook;const legacy={schemaVersion:1,revision:7,recipes:decoded.recipes,photos:decoded.photos,settings:{apple:false,oats:true}};factory.backends.get(store.name).records.set('current',structuredClone(legacy));const loaded=await store.read();assert.equal(loaded.schemaVersion,2);assert.equal(factory.backends.get(store.name).records.get('current').schemaVersion,1);loaded.recipes[0].notes+=' Complément.';await store.commit(loaded,7);store.close();const reopened=await new NotebookStore({factory,scope:'/migration/'}).read();assert.equal(reopened.revision,8);assert.equal(reopened.recipes[0].photoId,'photo-v1');assert.match(reopened.recipes[0].notes,/Complément/);assert.equal(factory.backends.get(store.name).records.get('current').schemaVersion,2);});
+test('l’export après migration contient toujours les photos de la V1',async()=>{const first=(await readBackup(text)).notebook,second=(await readBackup(await makeBackup(first))).notebook;assert.deepEqual(await second.photos[0].blob.arrayBuffer(),await first.photos[0].blob.arrayBuffer());assert.deepEqual(second.recipes,first.recipes);});

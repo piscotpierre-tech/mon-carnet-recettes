@@ -1,0 +1,4 @@
+
+> mon-carnet-recettes@0.2.1 check
+> node scripts/check.mjs
+

@@ -1,4 +1,4 @@
-import {blankRecipe,emptyNotebook,validateNotebook} from './domain.js';
+import {blankRecipe,emptyNotebook,validateNotebook} from './domain.js?v=0.2.1';
 const item=(name,quantity,unit,state,component)=>({id:crypto.randomUUID(),name,quantity,unit,state,component});
 export function exampleNotebook(){
   const book=emptyNotebook(),now=new Date().toISOString();

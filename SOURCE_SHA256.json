@@ -1,0 +1,22 @@
+{
+  "index.html": "f7b5b2e796c26e64586afe6ef6e86d20dc7a8ed82a95aa8ca51cb1a8094ab00f",
+  "styles.css": "f66bb36c5f0de61c049bd39d2aba8c0b7f7f054793ac53c1da4eeec340d4a472",
+  "src/app.js": "42c22feec51e86de1803128804abd730dfec7e2c7e72ffbd69e16bc2ba96fc78",
+  "src/backup.js": "9c643afd509cacf2922f85b397e5e347eeb50466d993bbf1ffe6b60f4d0787d4",
+  "src/domain.js": "07d1c89b72664672f5a34ac649797a3cb57b05fe1aba7f5dda76e731483e99e1",
+  "src/examples.js": "f63d2fb771bb0ea44e662d21f2c824c4f98e76cf489d9b4f6badddf5b9e1ec6f",
+  "src/page-turn.js": "938fbe8b953bce6e7fbb8e82244ef49084c33841464e314c3e6fb7f754693587",
+  "src/photos.js": "6df9092ed143919b48e41aa5def50efeb685b424d67cba861e2d6ed854f0a7b3",
+  "src/storage.js": "b916f9087ae1062b176f5b4133cdc5ba59ac2100b0abaab6b7c3af6c7191f7a3",
+  "src/visual.js": "48bf773982dbbd87b00a9d77153e35e7363757810f88c89e81707deffed2b84c",
+  "src/workflows.js": "332b9145a7d994a0b96237ed323f54a2453c2cdb4c1e5b6b4bc7920d10bb0332",
+  "assets/FONT-LICENSE.txt": "1315a62758a603a3e6e87a79b8389563789c59c1740b9db8bc2b20e2e2145458",
+  "assets/carnet-manuscrit.woff": "ffd0ca6adca95cb4aa753cd182cda59396b995163b7849a65125922d17587bf2",
+  "assets/reference-core.webp": "ed2d096bf41a295c5a3ab6b4e5feede7c29df1da9ca35aa8aff68251c50d0d0f",
+  "assets/reference-garden.webp": "6ec59229932da4b36124a191dd010435cfd9a3b725ea45153487add3e488f062",
+  "assets/reference-pantry.webp": "8a30e810f18872dbf272a583eb93bc6d465af1120130a929f79df3b8dc1253da",
+  "assets/reference-planning.webp": "a9bfcbd8f8296df3bb337f76fb6c82e144329d0685755de6cf8e9beb8295cb48",
+  "assets/tools-a.webp": "be60a7185a981b93647e0a1fe77cff80f24ae9f142a54f1416b0ca6b36a282bc",
+  "assets/tools-b.webp": "9c8ef37bada5248de69322afe70330ce0758e87b3f3c492d2b95820b267db946",
+  "assets/tools-c.webp": "7aca547ee36d4a849f033b190bf213f20ded6ed9bbc03e078882271311c072c4"
+}

@@ -1,10 +1,11 @@
-import {APP_VERSION,LIMITS,CATEGORIES,UNITS,STATES,COMPONENTS,blankRecipe,id,withRecipe,validateNotebook,searchRecipes,scaledQuantity,displayQuantity,exclusions} from './domain.js';
-import {NotebookStore,friendlyStorageError} from './storage.js';
-import {makeBackup,readBackup,prepareMerge} from './backup.js';
-import {preparePhoto,verifyPhotoDecoding} from './photos.js';
-import {exampleNotebook} from './examples.js';
-import {dayString,monday,shiftDay,remaining,timerAction,beginCooking,setMenu,rebuildShopping,harvestToReserve} from './workflows.js';
-import {esc,art,artwork,banner,flowers,frame,heading,section,action,tools} from './visual.js';
+import {APP_VERSION,LIMITS,CATEGORIES,UNITS,STATES,COMPONENTS,blankRecipe,id,withRecipe,validateNotebook,searchRecipes,scaledQuantity,displayQuantity,exclusions} from './domain.js?v=0.2.1';
+import {NotebookStore,friendlyStorageError} from './storage.js?v=0.2.1';
+import {makeBackup,readBackup,prepareMerge} from './backup.js?v=0.2.1';
+import {preparePhoto,verifyPhotoDecoding} from './photos.js?v=0.2.1';
+import {exampleNotebook} from './examples.js?v=0.2.1';
+import {dayString,monday,shiftDay,remaining,timerAction,beginCooking,setMenu,rebuildShopping,harvestToReserve} from './workflows.js?v=0.2.1';
+import {esc,art,artwork,banner,flowers,coverDecor,frame,heading,section,action,tools} from './visual.js?v=0.2.1';
+import {capturePageTurn,playPageTurn} from './page-turn.js?v=0.2.1';
 const main=document.querySelector('#app'),message=document.querySelector('#message'),store=new NotebookStore();
 let book,draft,dirty=false,busy=false,photoFile,removePhoto=false,stagedBackup,urls=[],lastRoute='#accueil',week=monday(),category='',searchQuery='',plantSpace='Pot',audioContext,wakeLock,expiredKey='';
 const servingsById=new Map();
@@ -26,10 +27,10 @@ function picture(recipe){const p=photoFor(recipe);return p?`<img class="recipe-p
 function marked(){const r=book.recipes.find(r=>r.id===book.bookmarkedId);return section('Ma recette marquée',r?`<div class="row">${picture(r)}<div><strong>${esc(r.title)}</strong><div class="actions">${action('Reprendre cette recette',`#recette/${r.id}`)}</div></div></div>`:empty('Marquez une recette pour la retrouver ici.'));}
 function home(){
  const c=book.cooking;
- page('LE CARNET DE PIERRE',`<div class="cover-panel"><div class="cover-flower-wall">${Array.from({length:6},()=>flowers()).join('')}</div><h1 class="cover-title">Mon carnet<br>de recettes<span class="cover-sub">Le carnet de Pierre</span></h1><div class="cover-objects">${art('carrots')}${art('cocotte')}${art('bowl')}</div><div class="cover-open">${action('Ouvrir le carnet','#sommaire')}</div></div>${marked()}${section('Préparation en cours',c?`<div class="row">${art('timer')}<div><strong>${esc(c.snapshot.title)}</strong><p>Étape ${c.stepIndex+1} / ${c.snapshot.steps.length} · ${c.servings} convives</p><p class="hand">Minuteur ${c.timer.running?'en cours':'en pause'} : ${clock(remaining(c.timer))}</p>${action('Reprendre en cuisine','#cuisine')}</div></div>`:empty('Aucune préparation en cours.'))}<p class="hand">À vos tabliers !</p>${action('Préférences et sauvegardes','#preferences')}`,['ladle','herbs'],'cover');
+ page('LE CARNET DE PIERRE',`<div class="cover-panel">${coverDecor()}<h1 class="cover-title">Mon carnet<br>de recettes<span class="cover-sub">Le carnet de Pierre</span></h1><div class="cover-open">${action('Ouvrir le carnet','#sommaire')}</div><span class="cover-bookmark hand" aria-hidden="true">Ma recette<br>marquée ♡</span></div>${marked()}${section('Préparation en cours',c?`<div class="row">${art('timer')}<div><strong>${esc(c.snapshot.title)}</strong><p>Étape ${c.stepIndex+1} / ${c.snapshot.steps.length} · ${c.servings} convives</p><p class="hand">Minuteur ${c.timer.running?'en cours':'en pause'} : ${clock(remaining(c.timer))}</p>${action('Reprendre en cuisine','#cuisine')}</div></div>`:empty('Aucune préparation en cours.'))}<div class="home-signature"><p class="hand">À vos tabliers !</p>${action('Préférences et sauvegardes','#preferences')}</div>`,['spoonHerbs'],'cover');
 }
 function index(){
- const rows=[['Le marché','Produits et idées','marketBasket','#marche'],['Mon petit coin de verdure','Plantes et récoltes','basil','#jardin'],['Mes recettes','Assiettes et menus','dish','#recettes'],['Ma liste de courses','Les achats à prévoir','basket','#courses'],['Le garde-manger','Réserves et bocaux','jar','#garde-manger']];
+ const rows=[['Le marché','Produits et idées','marketBasket','#marche'],['Mon petit coin de verdure','Plantes et récoltes','basil','#jardin'],['Mes recettes','Assiettes et menus','dish','#recettes'],['Ma liste de courses','Les achats à prévoir','shoppingNote','#courses'],['Le garde-manger','Réserves et bocaux','jar','#garde-manger']];
  page('SOMMAIRE',heading('Le carnet de Pierre')+`<label class="field">Chercher dans le carnet…<input id="global-search" type="search" placeholder="Un titre, un ingrédient…"></label>`+rows.map(([title,annotation,image,to])=>`<a class="row row-link" href="${to}">${art(image)}<div><h2>${title}</h2><p class="hand">${annotation}</p></div></a>`).join('')+marked()+`<div class="actions">${action('Mes menus','#menus')}${action('Préférences et sauvegardes','#preferences')}</div>`,['kettle','grinder']);
  document.querySelector('#global-search').onchange=e=>{searchQuery=e.target.value;category='';navigate('#recettes');};
 }
@@ -156,12 +157,15 @@ function beep(){if(!book.settings.sound||!audioContext||audioContext.state!=='ru
 async function updateWakeLock(){if(!book?.settings.keepAwake||!location.hash.startsWith('#cuisine')||document.visibilityState!=='visible'){await wakeLock?.release().catch(()=>{});wakeLock=null;return;}if(wakeLock&&!wakeLock.released)return;const status=document.querySelector('#awake-status');if(!navigator.wakeLock?.request){if(status)status.textContent='Maintien de l’écran non disponible dans ce navigateur.';return;}try{wakeLock=await navigator.wakeLock.request('screen');if(status)status.textContent='Écran maintenu allumé tant que cette page reste visible.';}catch{if(status)status.textContent='Le téléphone a refusé le maintien de l’écran allumé.';}}
 function tick(){const t=book?.cooking?.timer;if(!t)return;const left=remaining(t);const output=document.querySelector('#timer-output'),label=document.querySelector('#timer-label');if(output)output.textContent=clock(left);if(label)label.textContent=left===0?'Temps écoulé':`Il reste ${clock(left)}`;const key=t.endAt;if(t.running&&left===0&&expiredKey!==key){expiredKey=key;beep();notice('Minuteur terminé. Vérifiez votre préparation.');}}
 function render(){
- if(!book)return;urls.forEach(URL.revokeObjectURL);urls=[];clearNotice();stagedBackup=null;dirty=false;draft=null;photoFile=undefined;removePhoto=false;
- const route=location.hash||'#accueil',[name,key]=route.slice(1).split('/');lastRoute=route;
+ if(!book)return;const previousUrls=urls;urls=[];setTimeout(()=>previousUrls.forEach(URL.revokeObjectURL),1100);clearNotice();stagedBackup=null;dirty=false;draft=null;photoFile=undefined;removePhoto=false;
+ const route=location.hash||'#accueil',[name,key]=route.slice(1).split('/');
+ const turn=capturePageTurn(main,lastRoute,route),routeChanged=lastRoute!==route;lastRoute=route;
  const recipe=book.recipes.find(r=>r.id===key);
  try{
  if(name==='accueil')home();else if(name==='sommaire'||name==='carnet')index();else if(name==='recettes')recipeList();else if(name==='recette'&&recipe)detail(recipe);else if(name==='modifier'&&recipe)editor(recipe);else if(name==='nouvelle')editor();else if(name==='cuisine')kitchen();else if(name==='marche')market();else if(name==='produit')product(products.find(p=>p.id===key)||products[0]);else if(name==='jardin')garden();else if(name==='plante'&&book.plants.some(p=>p.id===key))plant(book.plants.find(p=>p.id===key));else if(name==='menus')menus();else if(name==='courses')courses();else if(name==='garde-manger')pantry();else if(name==='preparation'&&book.preparations.some(p=>p.id===key))preparation(book.preparations.find(p=>p.id===key));else if(name==='preferences'||name==='sauvegardes')preferences();else{home();notice('Cette page n’est pas disponible dans ce carnet.',true);}
  document.title='Mon carnet de recettes · '+APP_VERSION;updateWakeLock();
+ if(routeChanged&&typeof window.scrollTo==='function')window.scrollTo({top:0,behavior:'instant'});
+ playPageTurn(turn);
  }catch(error){page('LE CARNET DE PIERRE',heading('La page ne peut pas s’ouvrir')+action('Retour au sommaire','#sommaire'));report(error);}
 }
 main.addEventListener('input',e=>{if(e.target.closest('form'))dirty=true;});

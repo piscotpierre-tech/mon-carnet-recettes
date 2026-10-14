@@ -1,0 +1,64 @@
+{
+  "app": "mon-carnet-recettes",
+  "appVersion": "0.1.0",
+  "formatVersion": 1,
+  "exportedAt": "2026-10-14T18:32:02.744Z",
+  "sha256": "3c8fad6bc82e3dcc93a2be75dc53c6b6be48398dd1d402404b02fa010ca0fd8f",
+  "payload": {
+    "schemaVersion": 1,
+    "revision": 7,
+    "recipes": [
+      {
+        "id": "legacy-recipe",
+        "number": 1,
+        "version": 1,
+        "title": "Recette de Pierre avant migration",
+        "category": "Assiettes et plats",
+        "status": "draft",
+        "servings": 2,
+        "ingredients": [
+          {
+            "id": "legacy-lentils",
+            "name": "Lentilles",
+            "quantity": 120,
+            "unit": "g",
+            "state": "sec",
+            "component": "Garniture"
+          }
+        ],
+        "steps": [
+          "Étape personnelle."
+        ],
+        "notes": "Mes notes à conserver.",
+        "origin": "",
+        "photoId": "photo-v1",
+        "createdAt": "2026-10-14T18:32:02.742Z",
+        "updatedAt": "2026-10-14T18:32:02.743Z",
+        "nutrition": {
+          "status": "undocumented",
+          "source": null,
+          "perServing": {
+            "energyKcal": null,
+            "proteinG": null,
+            "carbohydrateG": null,
+            "fatG": null,
+            "fiberG": null,
+            "saltG": null
+          }
+        }
+      }
+    ],
+    "photos": [
+      {
+        "id": "photo-v1",
+        "name": "test.png",
+        "type": "image/png",
+        "data": "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAEUlEQVQImWNwjbJ1jbJlgFAAGD4DcWdCL3YAAAAASUVORK5CYII="
+      }
+    ],
+    "settings": {
+      "apple": false,
+      "oats": true
+    }
+  }
+}

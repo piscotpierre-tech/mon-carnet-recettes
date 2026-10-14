@@ -1,0 +1,244 @@
+{
+  "date": "2026-10-14",
+  "environment": "Chrome cloud, mobile iframe viewport; no physical Android test",
+  "screens": [
+    {
+      "route": "accueil",
+      "hash": "#accueil",
+      "overflow": false,
+      "small": [],
+      "title": "Mon carnetde recettesLe carnet de Pierre",
+      "width": 360
+    },
+    {
+      "route": "sommaire",
+      "hash": "#sommaire",
+      "overflow": false,
+      "small": [],
+      "title": "Le carnet de Pierre",
+      "width": 360
+    },
+    {
+      "route": "recette/example-cabillaud",
+      "hash": "#recette/example-cabillaud",
+      "overflow": false,
+      "small": [],
+      "title": "Cabillaud vapeur, poireaux fondants et lentilles vertes",
+      "width": 360
+    },
+    {
+      "route": "cuisine",
+      "hash": "#cuisine",
+      "overflow": false,
+      "small": [],
+      "title": "Cabillaud vapeur, poireaux fondants et lentilles vertes",
+      "width": 360
+    },
+    {
+      "route": "marche",
+      "hash": "#marche",
+      "overflow": false,
+      "small": [],
+      "title": "Au retour du marché…",
+      "width": 360
+    },
+    {
+      "route": "produit/carotte",
+      "hash": "#produit/carotte",
+      "overflow": false,
+      "small": [],
+      "title": "La carotte",
+      "width": 360
+    },
+    {
+      "route": "jardin",
+      "hash": "#jardin",
+      "overflow": false,
+      "small": [],
+      "title": "Mon petit coin de verdure",
+      "width": 360
+    },
+    {
+      "route": "plante/example-basilic",
+      "hash": "#plante/example-basilic",
+      "overflow": false,
+      "small": [],
+      "title": "Mon basilic en pot",
+      "width": 360
+    },
+    {
+      "route": "recettes",
+      "hash": "#recettes",
+      "overflow": false,
+      "small": [],
+      "width": 360
+    },
+    {
+      "route": "nouvelle",
+      "hash": "#nouvelle",
+      "overflow": false,
+      "small": [],
+      "title": "Écrire ma recette",
+      "width": 360
+    },
+    {
+      "route": "menus",
+      "hash": "#menus",
+      "overflow": false,
+      "small": [],
+      "title": "La petite semaine",
+      "width": 360
+    },
+    {
+      "route": "courses",
+      "hash": "#courses",
+      "overflow": false,
+      "small": [],
+      "title": "Mon panier à préparer",
+      "width": 360
+    },
+    {
+      "route": "garde-manger",
+      "hash": "#garde-manger",
+      "overflow": false,
+      "small": [],
+      "title": "Les bonnes réserves",
+      "width": 360
+    },
+    {
+      "route": "preparation/example-confiture",
+      "hash": "#preparation/example-confiture",
+      "overflow": false,
+      "small": [],
+      "title": "Confiture de fraises",
+      "width": 360
+    },
+    {
+      "route": "preferences",
+      "hash": "#preferences",
+      "overflow": false,
+      "small": [],
+      "title": "Préférences et sauvegardes",
+      "width": 360
+    },
+    {
+      "route": "accueil",
+      "hash": "#accueil",
+      "overflow": false,
+      "small": [],
+      "title": "Mon carnetde recettesLe carnet de Pierre",
+      "width": 390
+    },
+    {
+      "route": "sommaire",
+      "hash": "#sommaire",
+      "overflow": false,
+      "small": [],
+      "title": "Le carnet de Pierre",
+      "width": 390
+    },
+    {
+      "route": "recette/example-cabillaud",
+      "hash": "#recette/example-cabillaud",
+      "overflow": false,
+      "small": [],
+      "title": "Cabillaud vapeur, poireaux fondants et lentilles vertes",
+      "width": 390
+    },
+    {
+      "route": "cuisine",
+      "hash": "#cuisine",
+      "overflow": false,
+      "small": [],
+      "title": "Cabillaud vapeur, poireaux fondants et lentilles vertes",
+      "width": 390
+    },
+    {
+      "route": "marche",
+      "hash": "#marche",
+      "overflow": false,
+      "small": [],
+      "title": "Au retour du marché…",
+      "width": 390
+    },
+    {
+      "route": "produit/carotte",
+      "hash": "#produit/carotte",
+      "overflow": false,
+      "small": [],
+      "title": "La carotte",
+      "width": 390
+    },
+    {
+      "route": "jardin",
+      "hash": "#jardin",
+      "overflow": false,
+      "small": [],
+      "title": "Mon petit coin de verdure",
+      "width": 390
+    },
+    {
+      "route": "plante/example-basilic",
+      "hash": "#plante/example-basilic",
+      "overflow": false,
+      "small": [],
+      "title": "Mon basilic en pot",
+      "width": 390
+    },
+    {
+      "route": "recettes",
+      "hash": "#recettes",
+      "overflow": false,
+      "small": [],
+      "width": 390
+    },
+    {
+      "route": "nouvelle",
+      "hash": "#nouvelle",
+      "overflow": false,
+      "small": [],
+      "title": "Écrire ma recette",
+      "width": 390
+    },
+    {
+      "route": "menus",
+      "hash": "#menus",
+      "overflow": false,
+      "small": [],
+      "title": "La petite semaine",
+      "width": 390
+    },
+    {
+      "route": "courses",
+      "hash": "#courses",
+      "overflow": false,
+      "small": [],
+      "title": "Mon panier à préparer",
+      "width": 390
+    },
+    {
+      "route": "garde-manger",
+      "hash": "#garde-manger",
+      "overflow": false,
+      "small": [],
+      "title": "Les bonnes réserves",
+      "width": 390
+    },
+    {
+      "route": "preparation/example-confiture",
+      "hash": "#preparation/example-confiture",
+      "overflow": false,
+      "small": [],
+      "title": "Confiture de fraises",
+      "width": 390
+    },
+    {
+      "route": "preferences",
+      "hash": "#preferences",
+      "overflow": false,
+      "small": [],
+      "title": "Préférences et sauvegardes",
+      "width": 390
+    }
+  ]
+}

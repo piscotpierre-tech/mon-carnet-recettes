@@ -1,15 +1,15 @@
-# Mon carnet de recettes
+# Mon carnet de recettes — 0.2.1
 
-Application personnelle de cuisine française, version 0.2.0.
+Carnet personnel de Pierre : recettes, menus, courses, plantes, récoltes et réserves. HTML, CSS et JavaScript sans framework ; données et photos locales dans IndexedDB.
 
-## Publication GitHub Pages
+Application : https://piscotpierre-tech.github.io/mon-carnet-recettes/
 
-Les fichiers de ce dossier se placent directement à la racine du dépôt mon-carnet-recettes. Dans Settings → Pages : Deploy from a branch, branche main, dossier / (root), puis Save. Aucun service payant ni serveur applicatif requis.
+## Ouvrir et vérifier
 
-## Données
+Depuis ce dossier : `python3 -m http.server 8080`, puis ouvrir `http://localhost:8080/`.
 
-Les données saisies et les photos personnelles restent dans le navigateur. Ne déposez aucun export personnel dans ce dépôt. Les trois recettes fournies sont des exemples à compléter, pas une bibliothèque de recettes validées. Le partage d’URL ne synchronise pas les carnets. Pour transférer vos données vers cette nouvelle adresse, exporter le carnet puis importer le fichier depuis Préférences et sauvegardes.
+Tests : `npm test` et `npm run check` (Node 22 ou ultérieur). Aucun paquet à installer pour l’application.
 
-## Vérification
+La page `verification-0.2.1/controle-mobile.html` permet de consulter la version de recette dans des fenêtres de 360, 375, 390, 412 ou 430 px. Ses données restent séparées du carnet principal. Les sources, tests et captures sont documentés dans `docs/VERIFICATION-0.2.1.md`.
 
-53 tests de logique, stockage et contrôleurs simulés réussis sur les sources de cette version. Les captures et la recette navigateur/mobile restent à effectuer. Le minuteur conserve son heure de fin ; sonnerie et écran allumé dépendent du navigateur. Nutrition et conserves restent à documenter.
+Exporter régulièrement le carnet depuis « Préférences et sauvegardes ». L’application ne synchronise pas les appareils et ne stocke aucune donnée personnelle sur GitHub. La fermeture d’un navigateur ne déclenche pas de sonnerie garantie ; l’ouverture hors ligne n’est pas garantie.
