@@ -1,6 +1,6 @@
-import {validateNotebook, LIMITS} from './domain.js?v=0.4.1';
-import {exampleNotebook} from './examples.js?v=0.4.1';
-import {CATALOGUE_INFO, CATALOGUE_RECIPES} from './catalogue-data.js?v=0.4.1';
+import {validateNotebook, LIMITS} from './domain.js?v=0.5.0';
+import {exampleNotebook} from './examples.js?v=0.5.0';
+import {CATALOGUE_INFO, CATALOGUE_RECIPES} from './catalogue-data.js?v=0.5.0';
 
 export {CATALOGUE_INFO, CATALOGUE_RECIPES};
 const replacements = {'example-cabillaud':'CDR-R001','example-poulet':'CDR-R011','example-tarte':'CDR-R034'};

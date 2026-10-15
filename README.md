@@ -1,4 +1,4 @@
-# Mon carnet de recettes — 0.4.1
+# Mon carnet de recettes — 0.5.0
 
 Couverture issue du véritable cahier de Pierre, sommaire en cinq chapitres, papier patiné et minuteur à molette manipulable.
 
@@ -23,3 +23,11 @@ Exporter régulièrement le carnet depuis « Préférences et sauvegardes ». L�
 Validation de cette intégration : 75 tests automatisés réussis et contrôles statiques. Le contrôle visuel mobile des nouvelles fiches n’a pas été exécuté dans ce lot. Voir `docs/VERIFICATION-0.4.1.md`.
 
 La présentation privilégie le carnet de chef des années 80–90 : ingrédients, gestes, cuissons et annotations. Les encadrés institutionnels et les annonces de calcul alimentaire ont été retirés des fiches et de l’éditeur.
+
+## Le garde-manger et le petit coin de verdure
+
+Deux méthodes de référence (confiture de fraises et demi-poires européennes dans l’eau) et deux guides (basilic et fraisier) sont intégrés au carnet. Les méthodes conservent les formats et unités de leurs sources. Les consignes et leurs références sont consultables sans mode de fabrication guidé pour un matériel non renseigné.
+
+Les récoltes acceptent une quantité pesée, comptée ou inconnue. Elles peuvent rejoindre une réserve une seule fois. Les lots gardent la version de leur méthode et des notes sur le matériel réellement employé. Chaque pot a son ouverture, sa quantité connue ou son suivi par pot, et son journal de prélèvements annulables. L’annulation conserve la date d’ouverture. Les menus ne prélèvent rien automatiquement dans les réserves.
+
+Validation 0.5.0 : 92 tests automatisés réussis et contrôles statiques réussis. Voir `docs/VERIFICATION-0.5.0.md`. Les anciennes sauvegardes restent acceptées ; l’export conserve les nouvelles données. Aucun contrôle visuel mobile n’a été exécuté dans ce lot.

@@ -39,3 +39,20 @@ test('la liste affiche les 50 titres et les catégories filtrent les 5 entrées 
  await click('category','Entrées');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,5);
  await click('category','Desserts');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,5);
 });
+
+test('les deux fiches de conserve et les deux guides du jardin se lisent dans les contrôleurs',async()=>{
+ for(const route of ['#culture/basilic','#culture/fraisier']){await go(route);assert.match(main.innerHTML,/Les gestes du jardinier/);assert.match(main.innerHTML,/Noter mon plant/);assert.ok(!main.innerHTML.includes('La page ne peut pas s’ouvrir'));}
+ for(const p of current().preparations.filter(p=>p.referenceId)){await go('#preparation/'+p.id);assert.match(main.innerHTML,/traitement des pots remplis/);assert.match(main.innerHTML,/Noter une fournée/);assert.ok(!main.innerHTML.includes('La page ne peut pas s’ouvrir'));}
+});
+test('le contrôleur note un lot, ouvre un seul pot, prélève puis annule sans changer l’ouverture',async()=>{
+ const p=current().preparations.find(p=>p.referenceId==='GM01');await go('#preparation/'+p.id);const f=nodes.get('#lot-form');
+ const fields={label:'Fraises — contrôle',date:'2026-10-15',jarCount:'2',netWeightG:'200',container:'Pot à noter',closure:'Fermeture à noter',equipment:'Marmite à noter',altitudeFt:'',treatmentMinutes:'',ingredientsNotes:'Mes fraises',treatmentNotes:'Ma note',location:'Cellier',notes:'Une fournée'};
+ f.elements=Object.fromEntries(Object.entries(fields).map(([name,value])=>[name,{value}]));await f.onsubmit({preventDefault(){},target:f});assert.ok(current().pantryLots,message.textContent);const lot=current().pantryLots.at(-1),[jar,other]=current().reserves.filter(r=>r.pantryLotId===lot.id);assert.ok(lot);assert.equal(lot.treatmentMinutes,null);
+ await go('#reserve/'+jar.id);const opening=nodes.get('#jar-open-form');opening.elements={date:{value:'2026-10-15'}};await opening.onsubmit({preventDefault(){},target:opening});assert.equal(current().reserves.find(r=>r.id===jar.id).openedOn,'2026-10-15');assert.equal(current().reserves.find(r=>r.id===other.id).openedOn,null);
+ const use=nodes.get('#reserve-use-form');use.elements={quantity:{value:'30'},recipeId:{value:'CDR-R050'},date:{value:'2026-10-15'},notes:{value:'Pour les crêpes'}};await use.onsubmit({preventDefault(){},target:use});assert.equal(current().reserves.find(r=>r.id===jar.id).quantity,170);const movement=current().reserveUses.at(-1);await click('undo-reserve-use',movement.id);assert.equal(current().reserves.find(r=>r.id===jar.id).quantity,200);assert.equal(current().reserves.find(r=>r.id===jar.id).openedOn,'2026-10-15');
+});
+
+test('le contrôleur garde une récolte non pesée et une observation, puis retrouve la réserve sans inventer de poids',async()=>{
+ await go('#plante/example-fraisier');const observation=nodes.get('#observation-form');observation.elements={soil:{value:'Humide'},text:{value:'Trois fruits commencent à rougir.'},date:{value:'2026-10-15'}};await observation.onsubmit({preventDefault(){},target:observation});assert.ok(current().observations.some(o=>o.text==='Terre humide. Trois fruits commencent à rougir.'));
+ const harvest=nodes.get('#harvest-form');harvest.elements={quantity:{value:''},unit:{value:'g'},date:{value:'2026-10-15'}};await harvest.onsubmit({preventDefault(){},target:harvest});const row=current().harvests.at(-1);assert.equal(row.quantity,null);await click('harvest-reserve',row.id);const r=current().reserves.find(r=>r.harvestId===row.id);assert.ok(r);assert.equal(r.quantity,null);await go('#reserve/'+r.id);assert.match(main.innerHTML,/Quantité non renseignée/);assert.ok(!main.innerHTML.includes('La page ne peut pas s’ouvrir'));
+});

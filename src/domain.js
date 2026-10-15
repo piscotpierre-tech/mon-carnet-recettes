@@ -1,5 +1,5 @@
 export const APP = 'mon-carnet-recettes';
-export const APP_VERSION = '0.4.1';
+export const APP_VERSION = '0.5.0';
 export const SCHEMA_VERSION = 2;
 export const LIMITS = Object.freeze({recipes: 1000, photoBytes: 2 * 1024 * 1024, allPhotosBytes: 30 * 1024 * 1024, backupBytes: 45 * 1024 * 1024});
 export const CATEGORIES = ['Assiettes et plats', 'Entrées', 'Desserts', 'Garnitures', 'Sauces et bases'];
@@ -153,6 +153,7 @@ export function mergeNotebooks(current, incoming) {
     next.recipes.push(added); same.set(added.id, added);
   }
   for (const key of ['plants','observations','harvests','reserves','preparations','menus']) next[key] = mergeRecords(current[key], incoming[key]);
+  for(const key of ['pantryLots','reserveUses'])if(current[key]||incoming[key])next[key]=mergeRecords(current[key]??[],incoming[key]??[]);
   next.shopping = {generated: mergeRecords(current.shopping.generated, incoming.shopping.generated), personal: mergeRecords(current.shopping.personal, incoming.shopping.personal)};
   next.favoriteIds = [...new Set([...current.favoriteIds,...incoming.favoriteIds])];
   next.bookmarkedId ??= incoming.bookmarkedId;
@@ -176,12 +177,36 @@ function validateExtensions(book) {
   function quantity(value,positive=false){if(value!==null&&!(typeof value==='number'&&Number.isFinite(value)&&value>=(positive?0.00000001:0)&&value<=1000000))fail('Quantité invalide.');}
   function day(value){if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value)||!Number.isFinite(Date.parse(value+'T12:00:00Z'))||new Date(value+'T12:00:00Z').toISOString().slice(0,10)!==value)fail('Date du carnet invalide.');}
   for(const plant of rows('Plantes',book.plants,1000)){str(plant.name,160,'Nom de plante',false);str(plant.kind,80,'Type de plante');enumValue(plant.space,['Pot','Jardinière','Jardin'],'Installation');str(plant.location,300,'Emplacement');str(plant.source,1500,'Source de jardinage');}
+  for(const p of book.plants){for(const key of ['variety','exposure','drainage'])if(p[key]!==undefined)str(p[key],300,'Installation du plant');for(const key of ['potWidthCm','potDepthCm'])if(p[key]!==undefined&&p[key]!==null&&!(typeof p[key]==='number'&&Number.isFinite(p[key])&&p[key]>0&&p[key]<=1000))fail('Dimensions du pot invalides.');if(p.installedOn)day(p.installedOn);}
   const plantIds=new Set(book.plants.map(p=>p.id));
   for(const observation of rows('Observations',book.observations)){if(!plantIds.has(observation.plantId))fail('Plante d’observation introuvable.');str(observation.text,4000,'Observation',false);day(observation.date);}
-  for(const harvest of rows('Récoltes',book.harvests)){if(!plantIds.has(harvest.plantId))fail('Plante de récolte introuvable.');quantity(harvest.quantity,true);if(harvest.quantity===null)fail('Quantité de récolte requise.');str(harvest.unit,40,'Unité',false);day(harvest.date);}
+  for(const harvest of rows('Récoltes',book.harvests)){if(!plantIds.has(harvest.plantId))fail('Plante de récolte introuvable.');quantity(harvest.quantity,true);str(harvest.unit,40,'Unité',false);day(harvest.date);}
   for(const reserve of rows('Réserves',book.reserves)){str(reserve.name,200,'Réserve',false);quantity(reserve.quantity);str(reserve.unit,40,'Unité',false);str(reserve.state,80,'État');str(reserve.lot,100,'Lot');day(reserve.date);if(reserve.harvestId!==null&&!book.harvests.some(h=>h.id===reserve.harvestId))fail('Récolte de réserve introuvable.');}
   if(new Set(book.reserves.filter(r=>r.harvestId).map(r=>r.harvestId)).size!==book.reserves.filter(r=>r.harvestId).length)fail('Une récolte est déjà enregistrée dans les réserves.');
-  for(const preparation of rows('Préparations',book.preparations,1000)){str(preparation.name,200,'Préparation',false);str(preparation.source,1500,'Source');str(preparation.method,8000,'Méthode');str(preparation.storage,1500,'Stockage');str(preparation.lot,100,'Lot');if(preparation.status!=='undocumented')fail('Un procédé ne peut pas être déclaré vérifié dans cette version.');if(!Array.isArray(preparation.ingredients)||preparation.ingredients.length>150)fail('Ingrédients de préparation invalides.');for(const i of preparation.ingredients){str(i.name,200,'Ingrédient',false);quantity(i.quantity);str(i.unit,40,'Unité',false);}}
+  function preparation(p){
+    str(p.name,200,'Préparation',false);str(p.source,1500,'Source');str(p.method,8000,'Méthode');str(p.storage,1500,'Stockage');str(p.lot,100,'Lot');if(p.status!=='undocumented')fail('Un procédé ne peut pas être déclaré vérifié dans cette version.');
+    if(!Array.isArray(p.ingredients)||p.ingredients.length>150)fail('Ingrédients de préparation invalides.');for(const i of p.ingredients){str(i.name,200,'Ingrédient',false);quantity(i.quantity);str(i.unit,40,'Unité',false);}
+    if(p.version!==undefined)int(p.version,1,1000000,'Version du procédé');if(p.referenceId!==undefined){enumValue(p.referenceId,['GM01','GM02'],'Référence du procédé');if(!Array.isArray(p.table)||!Array.isArray(p.extraSources)||typeof p.intro!=='string'||typeof p.sourceTitle!=='string')fail('La fiche de référence est incomplète.');}
+    for(const key of ['intro','yield','batchNote','tableNote','search','sourceTitle'])if(p[key]!==undefined)str(p[key],4000,'Texte du garde-manger');
+    if(p.table!==undefined&&(!Array.isArray(p.table)||p.table.length>20||p.table.some(row=>!Array.isArray(row)||row.length!==2||row.some(cell=>typeof cell!=='string'||cell.length>300))))fail('Tableau du procédé invalide.');
+    if(p.extraSources!==undefined&&(!Array.isArray(p.extraSources)||p.extraSources.length>20||p.extraSources.some(row=>!Array.isArray(row)||row.length!==2||row.some(cell=>typeof cell!=='string'||cell.length>1500))))fail('Sources du procédé invalides.');
+  }
+  for(const p of rows('Préparations',book.preparations,1000))preparation(p);
+  const lotIds=new Set();
+  for(const lot of rows('Lots',book.pantryLots??[],1000)){
+    lotIds.add(lot.id);identifier(lot.preparationId);if(!book.preparations.some(p=>p.id===lot.preparationId))fail('Fiche du lot introuvable.');preparation(lot.procedure);if(lot.procedure.id!==lot.preparationId)fail('Version de lot incohérente.');
+    day(lot.date);str(lot.label,100,'Nom du lot',false);int(lot.jarCount,1,100,'Nombre de pots');
+    for(const key of ['container','closure','equipment','location'])str(lot[key],300,'Matériel du lot');str(lot.treatmentNotes,4000,'Notes de fabrication');str(lot.ingredientsNotes,4000,'Ingrédients du lot');
+    quantity(lot.netWeightG,true);if(lot.altitudeFt!==null&&!(typeof lot.altitudeFt==='number'&&Number.isFinite(lot.altitudeFt)&&lot.altitudeFt>=0&&lot.altitudeFt<=30000))fail('Altitude du lot invalide.');if(lot.treatmentMinutes!==null)int(lot.treatmentMinutes,1,1440,'Durée notée');
+  }
+  const jars=new Set();for(const r of book.reserves)if(r.pantryLotId!==undefined){
+    if(!lotIds.has(r.pantryLotId))fail('Lot du pot introuvable.');if(r.unit==='pot'&&![0,1].includes(r.quantity))fail('Un pot individuel se compte fermé ou terminé, sans conversion de poids.');const lot=(book.pantryLots??[]).find(l=>l.id===r.pantryLotId);int(r.jarNumber,1,lot.jarCount,'Numéro du pot');const key=r.pantryLotId+'|'+r.jarNumber;if(jars.has(key))fail('Pot dupliqué.');jars.add(key);if(r.openedOn!==null)day(r.openedOn);if(typeof r.discarded!=='boolean')fail('État du pot invalide.');
+  }
+  for(const lot of book.pantryLots??[])if(book.reserves.filter(r=>r.pantryLotId===lot.id).length!==lot.jarCount)fail('Un pot manque au lot.');
+  for(const use of rows('Prélèvements',book.reserveUses??[],5000)){
+    if(!book.reserves.some(r=>r.id===use.reserveId))fail('Réserve prélevée introuvable.');quantity(use.quantity,true);if(use.quantity===null)fail('Prélèvement non renseigné.');day(use.date);str(use.unit,40,'Unité du prélèvement',false);str(use.recipeTitle,160,'Recette liée');if(typeof use.undone!=='boolean')fail('Annulation du prélèvement invalide.');
+    if(use.recipeId!==null){identifier(use.recipeId);if(!book.recipes.some(r=>r.id===use.recipeId))fail('Recette du prélèvement introuvable.');int(use.recipeVersion,1,1000000,'Version liée');}else if(use.recipeVersion!==null)fail('Version de recette sans recette.');
+  }
   const slots=new Set();
   for(const menu of rows('Menus',book.menus)){day(menu.date);enumValue(menu.slot,['Midi','Soir'],'Repas');int(menu.servings,1,100,'Convives');identifier(menu.recipeId);if(!recipeIds.has(menu.recipeId))fail('Recette de menu introuvable.');validateRecipe(menu.snapshot);if(menu.snapshot.id!==menu.recipeId)fail('Version de menu incohérente.');const slot=menu.date+menu.slot;if(slots.has(slot))fail('Deux menus occupent le même repas.');slots.add(slot);}
   if(!plain(book.shopping))fail('Courses invalides.');
