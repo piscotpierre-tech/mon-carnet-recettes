@@ -20,7 +20,7 @@ test('les 15 écrans se construisent avec des composants sélectionnables et san
  await go('#recette/CDR-R001');await click('servings-plus','CDR-R001');await click('cook','CDR-R001');await go('#cuisine');assert.match(main.innerHTML,/data-screen="À VOS TABLIERS !"/);assert.match(main.innerHTML,/timer-output/);assert.equal(current().cooking.servings,3);
 });
 test('le contrôleur conserve favoris, marque-page et progression de cuisine',async()=>{await go('#recette/CDR-R001');await click('favorite','CDR-R001');assert.ok(current().favoriteIds.includes('CDR-R001'));await click('bookmark','CDR-R001');assert.equal(current().bookmarkedId,null);await click('bookmark','CDR-R001');assert.equal(current().bookmarkedId,'CDR-R001');await go('#cuisine');await click('next-step');assert.equal(current().cooking.stepIndex,1);assert.deepEqual(current().cooking.completed,[0]);});
-test('les quantités de la fiche sont injectées comme texte, non comme image de maquette',async()=>{await go('#recette/CDR-R001');assert.match(nodes.get('#recipe-ingredients').innerHTML,/750/);assert.match(nodes.get('#recipe-ingredients').innerHTML,/Poireaux/);assert.ok(main.innerHTML.includes('<input id="target-servings"'));assert.ok(main.innerHTML.includes('Nutrition non calculée.'));});
+test('les quantités de la fiche sont injectées comme texte, non comme image de maquette',async()=>{await go('#recette/CDR-R001');assert.match(nodes.get('#recipe-ingredients').innerHTML,/750/);assert.match(nodes.get('#recipe-ingredients').innerHTML,/Poireaux/);assert.ok(main.innerHTML.includes('<input id="target-servings"'));});
 test('le contrôleur de création conserve les saisies d’un formulaire simulé',async()=>{
  await go('#nouvelle');const f=nodes.get('#recipe-form');
  const fields={title:'Ma recette enregistrée',servings:'2',category:'Assiettes et plats',status:'draft',origin:'Mon essai',notes:'Une annotation personnelle.',material:'Une casserole',prepMinutes:'15',cookMinutes:''};
@@ -32,10 +32,10 @@ test('le contrôleur de création conserve les saisies d’un formulaire simulé
 
 test('les 50 recettes intégrées ouvrent une fiche et un mode cuisine sans erreur de contrôleur',async()=>{
  const recipes=current().recipes.filter(r=>r.editorial);assert.equal(recipes.length,50);
- for(const r of recipes){await go('#recette/'+r.id);assert.ok(main.innerHTML.includes(r.title.replaceAll('&','&amp;').replaceAll('\"','&quot;')),r.id);assert.match(main.innerHTML,/Allergènes de la fiche d’origine/);assert.match(main.innerHTML,/Repères de cuisson et sources/);assert.ok(nodes.get('#recipe-method').innerHTML.includes('<ol class="steps">'));await click('cook',r.id);await go('#cuisine');assert.match(main.innerHTML,/data-screen="À VOS TABLIERS !"/,r.id);assert.match(main.innerHTML,/Ingrédients de la recette/);}
+ for(const r of recipes){await go('#recette/'+r.id);assert.ok(main.innerHTML.includes(r.title.replaceAll('&','&amp;').replaceAll('\"','&quot;')),r.id);assert.match(main.innerHTML,/La petite touche du chef/);assert.ok(nodes.get('#recipe-method').innerHTML.includes('<ol class="steps">'));await click('cook',r.id);await go('#cuisine');assert.match(main.innerHTML,/data-screen="À VOS TABLIERS !"/,r.id);assert.match(main.innerHTML,/Ingrédients de la recette/);}
 });
 test('la liste affiche les 50 titres et les catégories filtrent les 5 entrées et 5 desserts',async()=>{
- await go('#recettes');assert.equal((nodes.get('#recipe-list').innerHTML.match(/À tester en cuisine/g)||[]).length,50);
- await click('category','Entrées');assert.equal((nodes.get('#recipe-list').innerHTML.match(/À tester en cuisine/g)||[]).length,5);
- await click('category','Desserts');assert.equal((nodes.get('#recipe-list').innerHTML.match(/À tester en cuisine/g)||[]).length,5);
+ await go('#recettes');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,51);
+ await click('category','Entrées');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,5);
+ await click('category','Desserts');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,5);
 });

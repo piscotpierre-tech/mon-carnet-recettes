@@ -1,6 +1,6 @@
-import {validateNotebook, LIMITS} from './domain.js?v=0.4.0';
-import {exampleNotebook} from './examples.js?v=0.4.0';
-import {CATALOGUE_INFO, CATALOGUE_RECIPES} from './catalogue-data.js?v=0.4.0';
+import {validateNotebook, LIMITS} from './domain.js?v=0.4.1';
+import {exampleNotebook} from './examples.js?v=0.4.1';
+import {CATALOGUE_INFO, CATALOGUE_RECIPES} from './catalogue-data.js?v=0.4.1';
 
 export {CATALOGUE_INFO, CATALOGUE_RECIPES};
 const replacements = {'example-cabillaud':'CDR-R001','example-poulet':'CDR-R011','example-tarte':'CDR-R034'};
@@ -42,13 +42,40 @@ export function installCatalogue(current) {
 
 // Adapt only the original supplied method. An edited method stays verbatim;
 // the ingredient list remains the authoritative calculation for its servings.
+export function culinaryMethod(recipe,index) {
+  const text=recipe.steps[index];
+  const source=CATALOGUE_RECIPES.find(r=>r.id===recipe.editorial?.sourceId);
+  if(!source || text!==source.steps[index])return text;
+  return text
+    .replace(' Noter le poids de chair et la quantité de jus consommée pour la nutrition.','')
+    .replace('Contrôler la cuisson selon le repère poisson S3.','Vérifier la cuisson à cœur (63 °C).')
+    .replace('Vérifier la cuisson du poisson selon S3.','Vérifier la cuisson à cœur (63 °C).')
+    .replace(/(?:Vérifier|Contrôler) le repère poisson S3/g,'Vérifier la cuisson à cœur (63 °C)')
+    .replace('contrôler le repère poisson S3','vérifier la cuisson à cœur (63 °C)')
+    .replace('Vérifier la cuisson selon S3','Vérifier la cuisson à cœur (63 °C)')
+    .replace('Vérifier la cuisson à cœur selon le repère volaille S3','Vérifier la cuisson à cœur (74 °C)')
+    .replace('jusqu’à la cuisson à cœur du repère volaille S3','jusqu’à cuisson à cœur (74 °C)')
+    .replace(/(?:vérifier|contrôler|Vérifier|Contrôler) le repère volaille S3/g,match=>(match[0]===match[0].toUpperCase()?'Vérifier':'vérifier')+' la cuisson à cœur (74 °C)')
+    .replace('jusqu’au repère volaille S3','jusqu’à cuisson à cœur (74 °C)')
+    .replace('jusqu’à des légumes tendres et au repère volaille S3','jusqu’à des légumes tendres et à une volaille cuite à cœur (74 °C)')
+    .replace('jusqu’au repère viande hachée S3','jusqu’à cuisson à cœur (71 °C)')
+    .replace('chaud à cœur selon S3','bien chaud à cœur (74 °C)')
+    .replace('Vérifier le repère porc S3 et le repos indiqué.','Vérifier la cuisson à cœur (63 °C), puis laisser reposer 3 min.')
+    .replace('cette fiche prévoit des œufs pris selon S3','laisser les œufs prendre jusqu’au cœur (71 °C)')
+    .replace('la fiche prévoit blancs et jaunes pris selon S3, pas des œufs coulants','laisser les blancs et les jaunes prendre')
+    .replace('une frittata prise selon S3','une frittata prise au centre (71 °C)')
+    .replace('un appareil pris selon S3','un appareil pris au centre (71 °C)')
+    .replace('un centre chaud et pris selon le repère plat aux œufs S3','un centre chaud et pris (71 °C)')
+    .replace('un appareil pris au centre selon le repère plat aux œufs S3','un appareil pris au centre (71 °C)');
+}
 export function hasOriginalMethod(recipe) {
   const source=CATALOGUE_RECIPES.find(r=>r.id===recipe.editorial?.sourceId);
-  return !!source && recipe.servings===source.servings && JSON.stringify(recipe.steps)===JSON.stringify(source.steps)
+  return !!source && recipe.servings===source.servings && recipe.steps.length===source.steps.length
+    && recipe.steps.every((step,index)=>step===source.steps[index]||step===culinaryMethod(source,index))
     && recipe.ingredients.length===source.ingredients.length && source.ingredients.every(item=>recipe.ingredients.some(i=>i.id===item.id&&i.quantity===item.quantity&&i.name===item.name&&i.unit===item.unit));
 }
 export function methodText(recipe, index, target) {
-  const text=recipe.steps[index];
+  const text=culinaryMethod(recipe,index);
   if (!hasOriginalMethod(recipe) || target===recipe.servings) return text;
   const factor=target/recipe.servings;
   return text.replace(/(\d+(?:[.,]\d+)?)\s*(kg|ml|cl|g|l)\b/g,(_,value,unit)=>`${new Intl.NumberFormat('fr-FR',{maximumFractionDigits:2}).format(Number(value.replace(',','.'))*factor)} ${unit}`)

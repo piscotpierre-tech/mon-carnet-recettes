@@ -1,8 +1,8 @@
-# Mon carnet de recettes — 0.4.0
+# Mon carnet de recettes — 0.4.1
 
 Couverture issue du véritable cahier de Pierre, sommaire en cinq chapitres, papier patiné et minuteur à molette manipulable.
 
-Les 50 recettes fournies par Pierre (40 assiettes, 5 entrées, 5 desserts) sont intégrées : ingrédients par composant, états de pesée, méthode, temps indicatifs, matériel, explication de l’assiette, allergènes et astuces du chef. Elles sont à tester en cuisine ; aucune valeur nutritionnelle n’est inventée.
+Les 50 recettes fournies par Pierre (40 assiettes, 5 entrées, 5 desserts) sont intégrées : ingrédients par composant, états de pesée, méthode, temps indicatifs, matériel, conseils de cuisson et astuces du chef.
 
 L’ajout s’effectue une seule fois au prochain chargement du carnet. Les exemples intacts sont complétés en conservant leurs identifiants ; les fiches personnelles ou modifiées restent préservées. Les favoris, photos, menus et préparations en cours sont conservés. Les sauvegardes V1/V2 restent lisibles.
 
@@ -20,4 +20,6 @@ La page `verification-0.3.0/controle-mobile.html` permet de consulter la version
 
 Exporter régulièrement le carnet depuis « Préférences et sauvegardes ». L’application ne synchronise pas les appareils et ne stocke aucune donnée personnelle sur GitHub. La fermeture d’un navigateur ne déclenche pas de sonnerie garantie ; l’ouverture hors ligne n’est pas garantie.
 
-Validation de cette intégration : 75 tests automatisés réussis et contrôles statiques. Le contrôle visuel mobile des nouvelles fiches n’a pas été exécuté dans ce lot. Voir `docs/VERIFICATION-0.4.0.md`.
+Validation de cette intégration : 75 tests automatisés réussis et contrôles statiques. Le contrôle visuel mobile des nouvelles fiches n’a pas été exécuté dans ce lot. Voir `docs/VERIFICATION-0.4.1.md`.
+
+La présentation privilégie le carnet de chef des années 80–90 : ingrédients, gestes, cuissons et annotations. Les encadrés institutionnels et les annonces de calcul alimentaire ont été retirés des fiches et de l’éditeur.
