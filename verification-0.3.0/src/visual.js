@@ -1,5 +1,5 @@
 export const artwork={
- chapterMarket:['sommaire-original',748,1536,32,273,235,170],chapterGarden:['sommaire-original',748,1536,34,461,232,175],chapterRecipes:['sommaire-original',748,1536,33,660,233,166],chapterShopping:['sommaire-original',748,1536,32,841,237,184],chapterPantry:['sommaire-original',748,1536,31,1039,237,187],rosemaryMarker:['sommaire-original',748,1536,625,1190,122,320],
+ chapterMarket:['sommaire-original',748,1536,32,273,235,170],chapterGarden:['sommaire-original',748,1536,34,461,232,175],chapterRecipes:['sommaire-original',748,1536,33,660,233,166],chapterShopping:['sommaire-original',748,1536,32,841,237,184],chapterPantry:['sommaire-original',748,1536,31,1039,237,187],rosemaryMarker:['sommaire-original',748,1536,644,1180,102,325],
   basin:['tools-a',1465,1536,10,115,530,330],waffle:['tools-a',1465,1536,545,20,515,485],gravy:['tools-a',1465,1536,984,145,460,300],pepper:['tools-a',1465,1536,105,462,250,530],grater:['tools-a',1465,1536,490,480,350,520],mandoline:['tools-a',1465,1536,930,490,500,515],citrus:['tools-a',1465,1536,15,1040,510,350],nutcracker:['tools-a',1465,1536,510,1010,430,440],knife:['tools-a',1465,1536,925,991,525,470],
   grinder:['tools-b',1465,1536,40,0,450,490],kettle:['tools-b',1465,1536,530,20,430,470],copper:['tools-b',1465,1536,950,105,500,375],mortar:['tools-b',1465,1536,65,490,400,490],masher:['tools-b',1465,1536,505,486,435,510],mincer:['tools-b',1465,1536,980,493,470,510],sieve:['tools-b',1465,1536,25,1010,460,430],mold:['tools-b',1465,1536,496,1030,485,390],skimmer:['tools-b',1465,1536,1000,1000,450,470],
   churn:['tools-c',1465,1536,115,10,355,485],ladle:['tools-c',1465,1536,525,20,440,470],madeleine:['tools-c',1465,1536,925,90,525,415],board:['tools-c',1465,1536,20,520,490,465],cakeSlice:['tools-c',1465,1536,530,495,445,480],funnel:['tools-c',1465,1536,985,560,470,390],basket:['tools-c',1465,1536,45,1010,540,420],tin:['tools-c',1465,1536,620,947,350,500],bottle:['tools-c',1465,1536,1090,948,260,520],
@@ -8,7 +8,12 @@ export const artwork={
 };
 export const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const assetPath=file=>globalThis.CDR_ASSETS?.[file]??`./assets/${file}.webp`;
-export function art(name,classes=''){const [file,w,h,x,y,cw,ch]=artwork[name]??artwork.cocotte;return `<svg class="art ${classes}" viewBox="${x} ${y} ${cw} ${ch}" style="aspect-ratio:${cw}/${ch}" aria-hidden="true" focusable="false"><image href="${assetPath(file)}" width="${w}" height="${h}"/></svg>`;}
+let artId=0;
+export function art(name,classes=''){
+ const [file,w,h,x,y,cw,ch]=artwork[name]??artwork.cocotte,id='art-window-'+(++artId);
+ const shape=name==='cocotte'?'<path d="M162 349C161 337 177 332 196 331L196 326Q205 321 215 326L215 331C236 332 251 338 251 347L262 350Q279 351 279 356Q278 365 261 366L258 388Q213 405 167 389L161 366Q147 366 144 358Q142 351 161 351Z"/>':name==='rosemaryMarker'?'<path d="M694 1183L710 1184L714 1211L735 1194L742 1204L726 1234L744 1224L746 1241L732 1262L745 1251L745 1270L730 1288L741 1286L738 1307L722 1330L721 1362L706 1396L700 1432L679 1503L665 1503L675 1451L649 1440L645 1405L648 1375L650 1357L665 1347L662 1325L653 1310L647 1283L651 1269L669 1299L664 1269L660 1246L670 1243L678 1272L674 1232L680 1225L687 1262L692 1221Z"/>':`<rect x="${x}" y="${y}" width="${cw}" height="${ch}"/>`;
+ return `<svg class="art ${classes}" viewBox="${x} ${y} ${cw} ${ch}" style="aspect-ratio:${cw}/${ch}" aria-hidden="true" focusable="false"><defs><clipPath id="${id}" clipPathUnits="userSpaceOnUse">${shape}</clipPath></defs><image href="${assetPath(file)}" width="${w}" height="${h}" clip-path="url(#${id})"/></svg>`;
+}
 // Broad, varied areas from the supplied illustrations, never a repeated flower.
 // These windows contain decoration only; labels and controls are live HTML.
 let ornamentId=0;
