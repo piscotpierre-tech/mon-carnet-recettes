@@ -1,4 +1,4 @@
-import {id, LIMITS} from './domain.js?v=0.2.1';
+import {id, LIMITS} from './domain.js?v=0.3.0-r2';
 export async function verifyPhotoDecoding(photos) {
   for (const photo of photos) {
     const objectURL = URL.createObjectURL(photo.blob), image = new Image();

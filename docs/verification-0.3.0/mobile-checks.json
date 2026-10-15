@@ -1,0 +1,242 @@
+[
+  {
+    "route": "accueil",
+    "hash": "#accueil",
+    "screen": "LE CARNET DE PIERRE",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "sommaire",
+    "hash": "#sommaire",
+    "screen": "SOMMAIRE",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "recette/example-cabillaud",
+    "hash": "#recette/example-cabillaud",
+    "screen": "MES RECETTES",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "cuisine",
+    "hash": "#cuisine",
+    "screen": "À VOS TABLIERS !",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "marche",
+    "hash": "#marche",
+    "screen": "LE MARCHÉ",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "produit/carotte",
+    "hash": "#produit/carotte",
+    "screen": "LE MARCHÉ",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "jardin",
+    "hash": "#jardin",
+    "screen": "MON JARDIN",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "plante/example-basilic",
+    "hash": "#plante/example-basilic",
+    "screen": "MON JARDIN",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "recettes",
+    "hash": "#recettes",
+    "screen": "MES RECETTES",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "nouvelle",
+    "hash": "#nouvelle",
+    "screen": "ÉCRIRE MA RECETTE",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "menus",
+    "hash": "#menus",
+    "screen": "MES MENUS",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "courses",
+    "hash": "#courses",
+    "screen": "LISTE DE COURSES",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "garde-manger",
+    "hash": "#garde-manger",
+    "screen": "LE GARDE-MANGER",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "preparation/example-confiture",
+    "hash": "#preparation/example-confiture",
+    "screen": "LE GARDE-MANGER",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "preferences",
+    "hash": "#preferences",
+    "screen": "LE CARNET DE PIERRE",
+    "scrollWidth": 360,
+    "smallButtons": [],
+    "width": 360
+  },
+  {
+    "route": "accueil",
+    "hash": "#accueil",
+    "screen": "LE CARNET DE PIERRE",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "sommaire",
+    "hash": "#sommaire",
+    "screen": "SOMMAIRE",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "recette/example-cabillaud",
+    "hash": "#recette/example-cabillaud",
+    "screen": "MES RECETTES",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "cuisine",
+    "hash": "#cuisine",
+    "screen": "À VOS TABLIERS !",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "marche",
+    "hash": "#marche",
+    "screen": "LE MARCHÉ",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "produit/carotte",
+    "hash": "#produit/carotte",
+    "screen": "LE MARCHÉ",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "jardin",
+    "hash": "#jardin",
+    "screen": "MON JARDIN",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "plante/example-basilic",
+    "hash": "#plante/example-basilic",
+    "screen": "MON JARDIN",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "recettes",
+    "hash": "#recettes",
+    "screen": "MES RECETTES",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "nouvelle",
+    "hash": "#nouvelle",
+    "screen": "ÉCRIRE MA RECETTE",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "menus",
+    "hash": "#menus",
+    "screen": "MES MENUS",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "courses",
+    "hash": "#courses",
+    "screen": "LISTE DE COURSES",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "garde-manger",
+    "hash": "#garde-manger",
+    "screen": "LE GARDE-MANGER",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "preparation/example-confiture",
+    "hash": "#preparation/example-confiture",
+    "screen": "LE GARDE-MANGER",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  },
+  {
+    "route": "preferences",
+    "hash": "#preferences",
+    "screen": "LE CARNET DE PIERRE",
+    "scrollWidth": 390,
+    "smallButtons": [],
+    "width": 390
+  }
+]
