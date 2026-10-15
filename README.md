@@ -1,4 +1,4 @@
-# Mon carnet de recettes — 0.5.0
+# Mon carnet de recettes — 0.5.1
 
 Couverture issue du véritable cahier de Pierre, sommaire en cinq chapitres, papier patiné et minuteur à molette manipulable.
 
@@ -26,8 +26,10 @@ La présentation privilégie le carnet de chef des années 80–90 : ingrédient
 
 ## Le garde-manger et le petit coin de verdure
 
-Deux méthodes de référence (confiture de fraises et demi-poires européennes dans l’eau) et deux guides (basilic et fraisier) sont intégrés au carnet. Les méthodes conservent les formats et unités de leurs sources. Les consignes et leurs références sont consultables sans mode de fabrication guidé pour un matériel non renseigné.
+Deux fiches de référence (confiture de fraises et demi-poires européennes dans l’eau) et deux guides (basilic et fraisier) sont intégrés au carnet. Les écrans utilisent les unités métriques françaises : g, kg, ml, cl, l, mm, cm, m et °C. L’altitude des nouvelles fournées se saisit en mètres. Les dimensions et fermetures des pots de référence restent précisées dans les méthodes.
+
+La fiche courante de confiture s’appuie sur une recette Larousse pesée : 1 kg net de fraises, 800 g de sucre et le jus d’un petit citron. Elle ne reprend pas le tableau de traitement de l’ancienne formule américaine. Les anciennes fournées gardent leur méthode et leurs valeurs archivées ; leur lecture et les prélèvements s’effectuent en unités métriques. Les fiches personnalisées ne sont pas remplacées.
 
 Les récoltes acceptent une quantité pesée, comptée ou inconnue. Elles peuvent rejoindre une réserve une seule fois. Les lots gardent la version de leur méthode et des notes sur le matériel réellement employé. Chaque pot a son ouverture, sa quantité connue ou son suivi par pot, et son journal de prélèvements annulables. L’annulation conserve la date d’ouverture. Les menus ne prélèvent rien automatiquement dans les réserves.
 
-Validation 0.5.0 : 92 tests automatisés réussis et contrôles statiques réussis. Voir `docs/VERIFICATION-0.5.0.md`. Les anciennes sauvegardes restent acceptées ; l’export conserve les nouvelles données. Aucun contrôle visuel mobile n’a été exécuté dans ce lot.
+Validation 0.5.1 : 103 tests automatisés réussis et contrôles statiques réussis. Voir `docs/VERIFICATION-0.5.1.md`. Les anciennes sauvegardes restent acceptées ; l’export conserve les nouvelles données. Aucun contrôle visuel mobile n’a été exécuté dans ce lot.

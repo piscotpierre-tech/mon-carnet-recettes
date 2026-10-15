@@ -43,3 +43,17 @@ export const PANTRY_PREPARATIONS=[
  extraSources:[['Bain pour préserver la couleur',N+'how/general/ensuring-high-quality-canned-foods/'],['Conserves maison après ouverture · tableau page 9','https://www.govinfo.gov/content/pkg/GOVPUB-A110-PURL-gpo38739/pdf/GOVPUB-A110-PURL-gpo38739.pdf'],['Rangement au réfrigérateur','https://agriculture.gouv.fr/cuisine-domicile-les-bons-gestes-dhygiene']]
  }
 ];
+
+// Référence culinaire pesée, pour l’usage français du carnet. Aucun tableau de
+// traitement d’une autre formule n’est transféré à cette composition.
+export const WEIGHED_JAM={
+ id:'pantry-GM01',referenceId:'GM01',version:2,name:'Confiture de fraises',status:'undocumented',source:'https://www.editions-larousse.fr/recette/confiture-de-fraise/',lot:'',notes:'',canningMode:'recipe-only',
+ intro:'Un kilo de fraises dans la bassine, de quoi retrouver la belle saison sur les tartines.',
+ ingredients:[{name:'Fraises équeutées, poids net',quantity:1,unit:'kg'},{name:'Sucre cristallisé',quantity:800,unit:'g'},{name:'Petit citron, pour son jus',quantity:1,unit:'pièce'}],
+ method:'La veille, rincer, égoutter et équeuter les fruits ; en peser 1 kg net. Réunir avec les 800 g de sucre et le jus du petit citron. Couvrir et laisser macérer 12 h. Le lendemain, chauffer doucement le mélange ; dès les premiers frémissements, prélever les fraises à l’écumoire. Écumer le sirop, puis le cuire jusqu’à 105 °C. Remettre les fruits et poursuivre doucement 10 à 15 min environ. Vérifier la prise sur une assiette froide, écumer, puis remplir les pots à chaud et fermer selon la méthode retenue.',
+ yield:'Noter le nombre et le poids des pots réellement obtenus.',
+ batchNote:'Les fraises se pèsent après équeutage. La fiche Larousse prévoit environ 1,1 kg de fruits achetés pour obtenir 1 kg net. Garder les proportions de cette fournée.',
+ potsNote:'Choisir des pots propres, en bon état, et une fermeture adaptée. Cette recette décrit la cuisson et la mise en pots ; elle ne fournit pas de programme de traitement des bocaux.',
+ table:[],tableNote:'',storage:'Après ouverture, garder au réfrigérateur. Avant ouverture, la durée et les conditions dépendent de la méthode de fermeture et de conservation réellement utilisée : aucun délai n’est déduit de cette seule recette.',
+ search:'confiture',sourceTitle:'Larousse · Confiture de fraise · ingrédients et méthode',extraSources:[]
+};

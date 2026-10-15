@@ -1,5 +1,5 @@
 export const APP = 'mon-carnet-recettes';
-export const APP_VERSION = '0.5.0';
+export const APP_VERSION = '0.5.1';
 export const SCHEMA_VERSION = 2;
 export const LIMITS = Object.freeze({recipes: 1000, photoBytes: 2 * 1024 * 1024, allPhotosBytes: 30 * 1024 * 1024, backupBytes: 45 * 1024 * 1024});
 export const CATEGORIES = ['Assiettes et plats', 'Entrées', 'Desserts', 'Garnitures', 'Sauces et bases'];
@@ -187,7 +187,8 @@ function validateExtensions(book) {
     str(p.name,200,'Préparation',false);str(p.source,1500,'Source');str(p.method,8000,'Méthode');str(p.storage,1500,'Stockage');str(p.lot,100,'Lot');if(p.status!=='undocumented')fail('Un procédé ne peut pas être déclaré vérifié dans cette version.');
     if(!Array.isArray(p.ingredients)||p.ingredients.length>150)fail('Ingrédients de préparation invalides.');for(const i of p.ingredients){str(i.name,200,'Ingrédient',false);quantity(i.quantity);str(i.unit,40,'Unité',false);}
     if(p.version!==undefined)int(p.version,1,1000000,'Version du procédé');if(p.referenceId!==undefined){enumValue(p.referenceId,['GM01','GM02'],'Référence du procédé');if(!Array.isArray(p.table)||!Array.isArray(p.extraSources)||typeof p.intro!=='string'||typeof p.sourceTitle!=='string')fail('La fiche de référence est incomplète.');}
-    for(const key of ['intro','yield','batchNote','tableNote','search','sourceTitle'])if(p[key]!==undefined)str(p[key],4000,'Texte du garde-manger');
+    for(const key of ['intro','yield','batchNote','tableNote','search','sourceTitle','potsNote'])if(p[key]!==undefined)str(p[key],4000,'Texte du garde-manger');
+    if(p.canningMode!==undefined)enumValue(p.canningMode,['recipe-only'],'Type de méthode');
     if(p.table!==undefined&&(!Array.isArray(p.table)||p.table.length>20||p.table.some(row=>!Array.isArray(row)||row.length!==2||row.some(cell=>typeof cell!=='string'||cell.length>300))))fail('Tableau du procédé invalide.');
     if(p.extraSources!==undefined&&(!Array.isArray(p.extraSources)||p.extraSources.length>20||p.extraSources.some(row=>!Array.isArray(row)||row.length!==2||row.some(cell=>typeof cell!=='string'||cell.length>1500))))fail('Sources du procédé invalides.');
   }
@@ -197,7 +198,7 @@ function validateExtensions(book) {
     lotIds.add(lot.id);identifier(lot.preparationId);if(!book.preparations.some(p=>p.id===lot.preparationId))fail('Fiche du lot introuvable.');preparation(lot.procedure);if(lot.procedure.id!==lot.preparationId)fail('Version de lot incohérente.');
     day(lot.date);str(lot.label,100,'Nom du lot',false);int(lot.jarCount,1,100,'Nombre de pots');
     for(const key of ['container','closure','equipment','location'])str(lot[key],300,'Matériel du lot');str(lot.treatmentNotes,4000,'Notes de fabrication');str(lot.ingredientsNotes,4000,'Ingrédients du lot');
-    quantity(lot.netWeightG,true);if(lot.altitudeFt!==null&&!(typeof lot.altitudeFt==='number'&&Number.isFinite(lot.altitudeFt)&&lot.altitudeFt>=0&&lot.altitudeFt<=30000))fail('Altitude du lot invalide.');if(lot.treatmentMinutes!==null)int(lot.treatmentMinutes,1,1440,'Durée notée');
+    quantity(lot.netWeightG,true);if(lot.altitudeM!==undefined&&lot.altitudeM!==null&&!(typeof lot.altitudeM==='number'&&Number.isFinite(lot.altitudeM)&&lot.altitudeM>=0&&lot.altitudeM<=10000))fail('Altitude du lot invalide.');if(lot.altitudeFt!==undefined&&lot.altitudeFt!==null&&!(typeof lot.altitudeFt==='number'&&Number.isFinite(lot.altitudeFt)&&lot.altitudeFt>=0&&lot.altitudeFt<=30000))fail('Altitude du lot invalide.');if(lot.treatmentMinutes!==null)int(lot.treatmentMinutes,1,1440,'Durée notée');
   }
   const jars=new Set();for(const r of book.reserves)if(r.pantryLotId!==undefined){
     if(!lotIds.has(r.pantryLotId))fail('Lot du pot introuvable.');if(r.unit==='pot'&&![0,1].includes(r.quantity))fail('Un pot individuel se compte fermé ou terminé, sans conversion de poids.');const lot=(book.pantryLots??[]).find(l=>l.id===r.pantryLotId);int(r.jarNumber,1,lot.jarCount,'Numéro du pot');const key=r.pantryLotId+'|'+r.jarNumber;if(jars.has(key))fail('Pot dupliqué.');jars.add(key);if(r.openedOn!==null)day(r.openedOn);if(typeof r.discarded!=='boolean')fail('État du pot invalide.');

@@ -1,6 +1,6 @@
-import {id,validateNotebook,normalize,exclusions} from './domain.js?v=0.5.0';
-import {dayString} from './workflows.js?v=0.5.0';
-import {GARDEN_PANTRY_ID,PANTRY_PREPARATIONS} from './garden-pantry-data.js?v=0.5.0';
+import {id,validateNotebook,normalize,exclusions} from './domain.js?v=0.5.1';
+import {dayString} from './workflows.js?v=0.5.1';
+import {GARDEN_PANTRY_ID,PANTRY_PREPARATIONS,WEIGHED_JAM} from './garden-pantry-data.js?v=0.5.1';
 export function installGardenPantry(book){
  validateNotebook(book);
  if(book.catalogueIds?.includes(GARDEN_PANTRY_ID))return {notebook:book,changed:false};
@@ -24,7 +24,8 @@ export function addPantryLot(book,input){
  if(!prep)throw Error('Choisir une fiche du garde-manger.');
  if(!Number.isInteger(input.jarCount)||input.jarCount<1||input.jarCount>100)throw Error('Noter entre 1 et 100 pots.');
  const netWeightG=input.netWeightG??null;if(netWeightG!==null&&(!Number.isFinite(netWeightG)||netWeightG<=0))throw Error('Le poids d’un pot doit être positif ou laissé vide.');
- const lot={...input,netWeightG,id:id(),procedure:structuredClone(prep),createdAt:new Date().toISOString()};
+ const altitudeM=input.altitudeM??(input.altitudeFt==null?null:input.altitudeFt*0.3048);
+ const lot={...input,altitudeM,netWeightG,id:id(),procedure:structuredClone(prep),createdAt:new Date().toISOString()};
  next.pantryLots??=[];next.pantryLots.push(lot);
  for(let i=1;i<=input.jarCount;i++)next.reserves.push({id:id(),name:prep.name,quantity:netWeightG??1,unit:netWeightG===null?'pot':'g',state:prep.referenceId==='GM01'?'confiture':'en bocal',lot:input.label,date:input.date,harvestId:null,notes:'',pantryLotId:lot.id,jarNumber:i,openedOn:null,discarded:false});
  return validateNotebook(next);
@@ -56,3 +57,13 @@ export function undoReserveUse(book,useId){
  reserve.quantity+=use.quantity;use.undone=true;return validateNotebook(next);
 }
 export function reserveStatus(reserve){return reserve.discarded?'Écarté':reserve.quantity===0?'Terminé':reserve.openedOn?'Ouvert':'Fermé';}
+
+export function installMetricPantry(book){
+ validateNotebook(book);const marker='CDR-METRIC-V1';if(book.catalogueIds?.includes(marker))return {notebook:book,changed:false};
+ const next=structuredClone(book),legacy=PANTRY_PREPARATIONS.find(p=>p.referenceId==='GM01');
+ for(let i=0;i<next.preparations.length;i++){
+  const p=next.preparations[i],intact=Object.keys(legacy).filter(key=>!['id','notes','lot'].includes(key)).every(key=>JSON.stringify(p[key])===JSON.stringify(legacy[key]));
+  if(intact)next.preparations[i]={...structuredClone(WEIGHED_JAM),id:p.id,notes:p.notes,lot:p.lot};
+ }
+ next.catalogueIds=[...(next.catalogueIds??[]),marker];return {notebook:validateNotebook(next),changed:true};
+}
