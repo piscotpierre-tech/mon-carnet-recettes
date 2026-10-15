@@ -1,5 +1,5 @@
 export const APP = 'mon-carnet-recettes';
-export const APP_VERSION = '0.3.0';
+export const APP_VERSION = '0.4.0';
 export const SCHEMA_VERSION = 2;
 export const LIMITS = Object.freeze({recipes: 1000, photoBytes: 2 * 1024 * 1024, allPhotosBytes: 30 * 1024 * 1024, backupBytes: 45 * 1024 * 1024});
 export const CATEGORIES = ['Assiettes et plats', 'Entrées', 'Desserts', 'Garnitures', 'Sauces et bases'];
@@ -7,7 +7,7 @@ export const UNITS = ['g', 'kg', 'ml', 'cl', 'l', 'pièce', 'c. à soupe', 'c. �
 export const STATES = ['non précisé', 'cru', 'cuit', 'sec', 'égoutté', 'nettoyé', 'cru, nettoyé'];
 export const COMPONENTS = ['Préparation principale', 'Garniture', 'Sauce', 'Finition'];
 export const NUTRIENTS = ['energyKcal', 'proteinG', 'carbohydrateG', 'fatG', 'fiberG', 'saltG'];
-export const normalize = value => String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+export const normalize = value => String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/œ/g,'oe').replace(/æ/g,'ae');
 export const id = () => crypto.randomUUID();
 const fail = message => { throw new Error(message); };
 const plain = value => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -47,10 +47,20 @@ export function validateRecipe(recipe) {
     str(item.name, 200, 'Nom d’ingrédient', false);
     if (item.quantity !== null && !(typeof item.quantity === 'number' && Number.isFinite(item.quantity) && item.quantity > 0 && item.quantity <= 1000000)) fail('Quantité invalide.');
     enumValue(item.unit, UNITS, 'Unité'); enumValue(item.state, STATES, 'État'); enumValue(item.component, COMPONENTS, 'Composant');
+    if(item.preparation!==undefined)str(item.preparation,300,'Précision de pesée');
+    if(item.group!==undefined)str(item.group,100,'Groupe d’ingrédients');
+    if(item.purchase!==undefined&&typeof item.purchase!=='boolean')fail('Article à acheter invalide.');
+    if(item.consumedFraction!==undefined&&item.consumedFraction!==null&&!(typeof item.consumedFraction==='number'&&item.consumedFraction>=0&&item.consumedFraction<=1))fail('Fraction consommée invalide.');
   }
   if (!Array.isArray(recipe.steps) || recipe.steps.length > 100) fail('Étapes invalides.');
   recipe.steps.forEach(step => str(step, 4000, 'Étape', false));
   if(recipe.material!==undefined)str(recipe.material,1000,'Matériel');
+  if(recipe.editorial!==undefined){
+    const e=recipe.editorial;if(!plain(e))fail('Contenu éditorial invalide.');identifier(e.sourceId);int(e.sourceNumber,1,50,'Numéro du catalogue');
+    for(const key of ['family','season','difficulty'])str(e[key],100,'Repère de recette');
+    for(const key of ['plateExplanation','chefTip','allergens'])str(e[key],4000,'Texte de recette');
+    int(e.totalMinutes,0,1440,'Temps total');if(typeof e.testedInKitchen!=='boolean')fail('Statut d’essai invalide.');
+  }
   for(const key of ['prepMinutes','cookMinutes'])if(recipe[key]!==undefined&&recipe[key]!==null)int(recipe[key],0,1440,'Durée');
   if(recipe.stepIngredients!==undefined&&(!Array.isArray(recipe.stepIngredients)||recipe.stepIngredients.length!==recipe.steps.length||recipe.stepIngredients.some(list=>!Array.isArray(list)||list.some(key=>!ingredientIds.has(key)))))fail('Ingrédients d’étape invalides.');
   if (recipe.status === 'ready' && (!recipe.ingredients.length || !recipe.steps.length)) fail('Pour être prête, une fiche doit contenir des ingrédients et des étapes.');
@@ -61,6 +71,7 @@ export function validateRecipe(recipe) {
 export function validateNotebook(book) {
   if (!plain(book) || book.schemaVersion !== SCHEMA_VERSION) fail('Version de données non prise en charge. Le carnet actuel est conservé.');
   int(book.revision, 0, Number.MAX_SAFE_INTEGER - 1, 'Révision');
+  if(book.catalogueIds!==undefined){if(!Array.isArray(book.catalogueIds)||book.catalogueIds.length>100||new Set(book.catalogueIds).size!==book.catalogueIds.length)fail('Catalogues invalides.');book.catalogueIds.forEach(identifier);}
   if (!Array.isArray(book.recipes) || book.recipes.length > LIMITS.recipes) fail('Trop de fiches ou liste invalide.');
   if (!Array.isArray(book.photos) || book.photos.length > LIMITS.recipes) fail('Liste de photos invalide.');
   if (!plain(book.settings) || typeof book.settings.apple !== 'boolean' || typeof book.settings.oats !== 'boolean') fail('Préférences invalides.');
@@ -147,6 +158,7 @@ export function mergeNotebooks(current, incoming) {
   next.bookmarkedId ??= incoming.bookmarkedId;
   if (current.cooking && incoming.cooking && JSON.stringify(current.cooking)!==JSON.stringify(incoming.cooking)) fail('Deux préparations en cours différentes : la fusion est annulée.');
   next.cooking ??= incoming.cooking;
+  if(current.catalogueIds||incoming.catalogueIds)next.catalogueIds=[...new Set([...(current.catalogueIds??[]),...(incoming.catalogueIds??[])])];
   return validateNotebook(next);
 }
 function mergeRecords(current,incoming) {

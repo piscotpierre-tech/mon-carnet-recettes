@@ -1,0 +1,53 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> mon-carnet-recettes@0.4.0 check
+> node scripts/check.mjs
+
+{
+  "status": "passed",
+  "kind": "static-source-checks",
+  "checks": [
+    "Syntaxe de tous les modules",
+    "Ressources et imports relatifs présents",
+    "Aucune ressource distante au démarrage",
+    "Langue, viewport, taille de base, focus et cibles tactiles définis"
+  ],
+  "layoutContracts": [
+    {
+      "width": 360,
+      "mediaRuleApplies": true,
+      "contentWidth": 312,
+      "twoFieldWidth": 151,
+      "browserRendered": false
+    },
+    {
+      "width": 375,
+      "mediaRuleApplies": true,
+      "contentWidth": 327,
+      "twoFieldWidth": 158.5,
+      "browserRendered": false
+    },
+    {
+      "width": 390,
+      "mediaRuleApplies": true,
+      "contentWidth": 342,
+      "twoFieldWidth": 166,
+      "browserRendered": false
+    },
+    {
+      "width": 412,
+      "mediaRuleApplies": true,
+      "contentWidth": 364,
+      "twoFieldWidth": 177,
+      "browserRendered": false
+    },
+    {
+      "width": 430,
+      "mediaRuleApplies": true,
+      "contentWidth": 382,
+      "twoFieldWidth": 186,
+      "browserRendered": false
+    }
+  ],
+  "errors": []
+}

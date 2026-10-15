@@ -1,4 +1,4 @@
-import {id,scaledQuantity,normalize,validateNotebook} from './domain.js?v=0.3.0-r2';
+import {id,scaledQuantity,normalize,validateNotebook} from './domain.js?v=0.4.0';
 export const dayString=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 export function monday(date=new Date()){const d=new Date(date);d.setDate(d.getDate()-(d.getDay()+6)%7);return dayString(d);}
 export function shiftDay(day,amount){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+amount);return dayString(d);}
@@ -30,9 +30,11 @@ export function rebuildShopping(book,week){
   const next=structuredClone(book),groups=new Map(),old=new Map(next.shopping.generated.map(r=>[r.key,r]));
   const meals=next.menus.filter(m=>m.date>=week&&m.date<shiftDay(week,7));
   for(const menu of meals)for(const ingredient of menu.snapshot.ingredients){
-    const a=amountBase(ingredient,menu.servings,menu.snapshot.servings),key=JSON.stringify([normalize(ingredient.name).trim(),a.unit,ingredient.state]);
+    if(ingredient.purchase===false)continue;
+    const state=ingredient.preparation||ingredient.state;
+    const a=amountBase(ingredient,menu.servings,menu.snapshot.servings),key=JSON.stringify([normalize(ingredient.name).trim(),a.unit,state]);
     let row=groups.get(key);
-    if(!row){row={id:old.get(key)?.id??id(),key,name:ingredient.name,quantity:0,unit:a.unit,state:ingredient.state,aisle:aisle(ingredient.name),bought:false,atHome:false,needsReview:false,menuIds:[]};groups.set(key,row);}
+    if(!row){row={id:old.get(key)?.id??id(),key,name:ingredient.name,quantity:0,unit:a.unit,state,aisle:aisle(ingredient.name),bought:false,atHome:false,needsReview:false,menuIds:[]};groups.set(key,row);}
     row.quantity=row.quantity===null||a.quantity===null?null:row.quantity+a.quantity;row.menuIds.push(menu.id);
   }
   for(const row of groups.values()){
