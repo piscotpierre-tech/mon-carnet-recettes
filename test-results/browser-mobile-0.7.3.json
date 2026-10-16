@@ -1,0 +1,326 @@
+[
+  {
+    "screen": "accueil",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "sommaire",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "recette/CDR-R001",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "cuisine",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "marche",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "jardin",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "garde-manger",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "secrets",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "nouvelle",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "menus",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "courses",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "preferences",
+    "configuredWidth": 360,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 360,
+    "smallButtons": 0,
+    "width": 360
+  },
+  {
+    "screen": "accueil",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "sommaire",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "recette/CDR-R001",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "cuisine",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "marche",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "jardin",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "garde-manger",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "secrets",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "nouvelle",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "menus",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "courses",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "preferences",
+    "configuredWidth": 390,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 390,
+    "smallButtons": 0,
+    "width": 390
+  },
+  {
+    "screen": "accueil",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "sommaire",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "recette/CDR-R001",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "cuisine",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "marche",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "jardin",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "garde-manger",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "secrets",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "nouvelle",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "menus",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "courses",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  },
+  {
+    "screen": "preferences",
+    "configuredWidth": 430,
+    "brokenImages": 0,
+    "overflow": 0,
+    "scrollWidth": 430,
+    "smallButtons": 0,
+    "width": 430
+  }
+]
