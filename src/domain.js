@@ -1,5 +1,5 @@
 export const APP = 'mon-carnet-recettes';
-export const APP_VERSION = '0.6.4';
+export const APP_VERSION = '0.7.0';
 export const SCHEMA_VERSION = 2;
 export const LIMITS = Object.freeze({recipes: 1000, photoBytes: 2 * 1024 * 1024, allPhotosBytes: 30 * 1024 * 1024, backupBytes: 45 * 1024 * 1024});
 export const CATEGORIES = ['Assiettes et plats', 'Entrées', 'Desserts', 'Garnitures', 'Sauces et bases'];
@@ -19,12 +19,12 @@ const date = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(va
 
 export function emptyNotebook() {
   return {schemaVersion: SCHEMA_VERSION, revision: 0, recipes: [], photos: [], settings: {apple: true, oats: true, sound: true, keepAwake: false},
-    favoriteIds: [], bookmarkedId: null, cooking: null, menus: [], shopping: {generated: [], personal: []}, plants: [], observations: [], harvests: [], reserves: [], preparations: []};
+    favoriteIds: [], bookmarkedId: null, cooking: null, menus: [], shopping: {generated: [], personal: []}, plants: [], observations: [], harvests: [], reserves: [], preparations: [], secrets: []};
 }
 export function migrateNotebook(input) {
   if (!input || ![1, 2].includes(input.schemaVersion)) fail('Version de données non prise en charge. Le carnet actuel est conservé.');
   const result = input.schemaVersion === 1 ? {...emptyNotebook(), ...structuredClone(input), schemaVersion:2, settings:{sound:true,keepAwake:false,...input.settings}} : input;
-  return validateNotebook(result);
+  return validateNotebook(result.secrets===undefined?{...result,secrets:[]}:result);
 }
 export function blankRecipe() {
   const now = new Date().toISOString();
@@ -155,6 +155,8 @@ export function mergeNotebooks(current, incoming) {
   }
   for (const key of ['plants','observations','harvests','reserves','preparations','menus']) next[key] = mergeRecords(current[key], incoming[key]);
   for(const key of ['pantryLots','reserveUses'])if(current[key]||incoming[key])next[key]=mergeRecords(current[key]??[],incoming[key]??[]);
+  next.secrets = mergeRecords(current.secrets??[],incoming.secrets??[]);
+  next.servingsByRecipe={...(incoming.servingsByRecipe??{}),...(current.servingsByRecipe??{})};
   next.shopping = {generated: mergeRecords(current.shopping.generated, incoming.shopping.generated), personal: mergeRecords(current.shopping.personal, incoming.shopping.personal)};
   next.favoriteIds = [...new Set([...current.favoriteIds,...incoming.favoriteIds])];
   next.bookmarkedId ??= incoming.bookmarkedId;
@@ -209,6 +211,12 @@ function validateExtensions(book) {
     if(!book.reserves.some(r=>r.id===use.reserveId))fail('Réserve prélevée introuvable.');quantity(use.quantity,true);if(use.quantity===null)fail('Prélèvement non renseigné.');day(use.date);str(use.unit,40,'Unité du prélèvement',false);str(use.recipeTitle,160,'Recette liée');if(typeof use.undone!=='boolean')fail('Annulation du prélèvement invalide.');
     if(use.recipeId!==null){identifier(use.recipeId);if(!book.recipes.some(r=>r.id===use.recipeId))fail('Recette du prélèvement introuvable.');int(use.recipeVersion,1,1000000,'Version liée');}else if(use.recipeVersion!==null)fail('Version de recette sans recette.');
   }
+  for(const secret of rows('Secrets de fabrication',book.secrets??[],1000)){
+    str(secret.title,200,'Titre du secret',false);
+    for(const [key,max] of Object.entries({recipeReference:1000,perfumes:1000,preparationNotes:8000,lot:100,trials:8000,tips:8000,source:1500}))str(secret[key],max,'Secret de fabrication');
+    quantity(secret.waterMl);quantity(secret.sugarG);if(secret.date)day(secret.date);
+  }
+  if(book.servingsByRecipe!==undefined){if(!plain(book.servingsByRecipe))fail('Convives enregistrés invalides.');for(const [key,value] of Object.entries(book.servingsByRecipe)){if(!recipeIds.has(key))fail('Recette de convives introuvable.');int(value,1,100,'Convives enregistrés');}}
   const slots=new Set();
   for(const menu of rows('Menus',book.menus)){day(menu.date);enumValue(menu.slot,['Midi','Soir'],'Repas');int(menu.servings,1,100,'Convives');identifier(menu.recipeId);if(!recipeIds.has(menu.recipeId))fail('Recette de menu introuvable.');validateRecipe(menu.snapshot);if(menu.snapshot.id!==menu.recipeId)fail('Version de menu incohérente.');const slot=menu.date+menu.slot;if(slots.has(slot))fail('Deux menus occupent le même repas.');slots.add(slot);}
   if(!plain(book.shopping))fail('Courses invalides.');

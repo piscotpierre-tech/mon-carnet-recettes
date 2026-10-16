@@ -91,6 +91,6 @@ test('AUD-03 : l’essai en cuisine et la provenance sont visibles, sans calcul 
 test('le brief de reprise garde couverture → ouvrir le carnet → sommaire et son menu direct',async()=>{
  await go('#accueil');assert.match(main.innerHTML,/Ouvrir le carnet/);
  assert.match(main.innerHTML,/href="#sommaire"/);
- await go('#sommaire');assert.match(main.innerHTML,/Menu de la semaine/);
+ await go('#sommaire');assert.match(main.innerHTML,/Mes menus/);
  assert.match(main.innerHTML,/href="#menus"/);
 });
