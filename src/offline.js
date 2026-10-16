@@ -25,3 +25,10 @@ export async function startOffline(onState,{navigator=globalThis.navigator}={}){
     updateState();
   }catch{onState('failed');}
 }
+
+export async function activateOfflineUpdate({navigator=globalThis.navigator}={}){
+ const registration=await navigator?.serviceWorker?.getRegistration(new URL('../',import.meta.url));
+ if(!registration?.waiting)return false;
+ registration.waiting.postMessage({type:'ACTIVATE_CARNET_UPDATE'});
+ return true;
+}

@@ -3,7 +3,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile,access,readdir} from 'node:fs/promises';
 import vm from 'node:vm';
-import {startOffline,offlineMessage} from '../src/offline.js';
+import {startOffline,offlineMessage,activateOfflineUpdate} from '../src/offline.js';
 import {APP_VERSION} from '../src/domain.js';
 const root=new URL('../',import.meta.url),code=await readFile(new URL('sw.js',root),'utf8');
 const base='https://example.test/mon-carnet-recettes/';
@@ -11,21 +11,21 @@ const prefix='carnet-shell:'+encodeURIComponent('/mon-carnet-recettes/')+':';
 const release=prefix+APP_VERSION;
 
 function worker({failAt=null}={}){
- const handlers={},stores=new Map(),fetched=[];let claimed=false;
+ const handlers={},stores=new Map(),fetched=[];let claimed=false,skipped=false;
  const cacheFor=name=>{
   if(!stores.has(name))stores.set(name,new Map());
   const rows=stores.get(name);
   return {async addAll(paths){for(const request of paths){const path=typeof request==='string'?request:request.url;if(typeof request!=='string')assert.equal(request.cache,'reload');fetched.push(path);if(failAt&&path.includes(failAt))throw Error('Réseau coupé');rows.set(path,new Response('cached:'+path));}},async match(key){return rows.get(typeof key==='string'?key:key.url)?.clone();}};
  };
  const caches={open:async name=>cacheFor(name),keys:async()=>[...stores.keys()],delete:async name=>stores.delete(name)};
- const self={registration:{scope:base},clients:{claim:async()=>{claimed=true;}},addEventListener(name,fn){handlers[name]=fn;}};
+ const self={skipWaiting:async()=>{skipped=true;},registration:{scope:base},clients:{claim:async()=>{claimed=true;}},addEventListener(name,fn){handlers[name]=fn;}};
  vm.runInNewContext(code,{self,caches,URL,Request,fetch:async()=>{throw Error('Hors ligne');}});
  const lifecycle=async name=>{let promise;handlers[name]({waitUntil(value){promise=value;}});await promise;};
  const request=async(url,overrides={})=>{
   let response;handlers.fetch({request:{url,method:'GET',mode:'cors',...overrides},respondWith(value){response=value;}});
   return response?await (await response).text():null;
  };
- return {stores,fetched,lifecycle,request,get claimed(){return claimed;}};
+ return {stores,fetched,lifecycle,request,handlers,get claimed(){return claimed;},get skipped(){return skipped;}};
 }
 
 test('le cache permet chaque ressource et la réouverture à la racine sans réseau, même avec un ancien paramètre v',async()=>{
@@ -50,7 +50,7 @@ test('la mise à jour retire seulement les anciens caches de ce carnet et ne for
  await w.lifecycle('install');assert.ok(w.stores.has(prefix+'0.6.3'));
  await w.lifecycle('activate');assert.ok(!w.stores.has(prefix+'0.6.3'));
  assert.ok(w.stores.has(release));assert.ok(w.stores.has(other));assert.ok(w.stores.has('autre-application'));
- assert.doesNotMatch(code,/self\.skipWaiting\s*\(/);
+ assert.equal(w.skipped,false);
  assert.doesNotMatch(code,/indexedDB|localStorage/);
 });
 test('les liens extérieurs, exports, écritures et ressources hors du carnet ne sont pas interceptés',async()=>{
@@ -89,4 +89,13 @@ test('l’interface distingue préparation, prêt, mise à jour, échec et navig
  registration.waiting={};states.length=0;await startOffline(s=>states.push(s),{navigator});assert.deepEqual(states,['preparing','update']);
  states.length=0;await startOffline(s=>states.push(s),{navigator:{serviceWorker:{register:async()=>{throw Error('Réseau');}}}});assert.deepEqual(states,['preparing','failed']);
  for(const state of ['preparing','ready','update','failed','unavailable'])assert.ok(offlineMessage(state));
+});
+
+test('la mise à jour ne s’active immédiatement que sur demande explicite, après installation',async()=>{
+ const w=worker();await w.lifecycle('install');assert.equal(w.skipped,false);
+ let result;w.handlers.message({data:{type:'OTHER'},waitUntil(p){result=p;}});assert.equal(w.skipped,false);
+ w.handlers.message({data:{type:'ACTIVATE_CARNET_UPDATE'},waitUntil(p){result=p;}});await result;assert.equal(w.skipped,true);
+ let message;const navigator={serviceWorker:{getRegistration:async()=>({waiting:{postMessage:m=>{message=m;}}})}};
+ assert.equal(await activateOfflineUpdate({navigator}),true);assert.deepEqual(message,{type:'ACTIVATE_CARNET_UPDATE'});
+ assert.equal(await activateOfflineUpdate({navigator:{}}),false);
 });

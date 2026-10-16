@@ -40,7 +40,7 @@
   "index.html": "b76f8de384c6f8cf5fc826cb26491a0057d830d203bce9f9dc10ff80a2ebd38d",
   "manifest.webmanifest": "c2a89b2df966a23abf8aced16e7417182675196770c48204a8345649e2589196",
   "src/additional-catalogue-data.js": "90ac686f573838f1a8f28830dd356e7168fb4e67333d2939c98c76afd3102aa7",
-  "src/app.js": "b2573a7ed6b1df1cec201255bdcf9bdcac9049c90022d9f58be94baa6d125b16",
+  "src/app.js": "3154c49bc3c6c659d0a6b239c7d61ee3a31da754dca97ff55f586c22f013b068",
   "src/backup.js": "76a7d3bb088349d95312fda927b3e1c5e5fcab1a0b27e4998fdf9035a3294278",
   "src/catalogue-data.js": "3b02a3e5ae56d8699de0b5f66af3693b2054e7e224ff62d8aa81cd7e5935e3de",
   "src/catalogue.js": "281a40fd86cf814cb08fb09c4c581c7030dee0485c8006828b25553500db6006",
@@ -50,7 +50,7 @@
   "src/garden-pantry-ui.js": "f6ed74ee6f506abcf4ecc2f00e1fc54781f36df11ac129bad6dc5d15d1919724",
   "src/garden-pantry.js": "7d9cf91b3733fd7e86b30c65f4494a4480d85e3db58d07e24ad75286ee8f3f8c",
   "src/metric.js": "d5bcc390dc66b2e51b707815288b42fa2829bbb75e827b5ca0dade7a179c882c",
-  "src/offline.js": "be7b4c9793c2ea9ac45de08f4ddbe8129d0e608701cf65bd21420d7bfd1120d4",
+  "src/offline.js": "9787ea70ba9c9022aa55aec5a2b654b5614a1a844908c47cac07bcf5f845de9a",
   "src/page-turn.js": "938fbe8b953bce6e7fbb8e82244ef49084c33841464e314c3e6fb7f754693587",
   "src/photos.js": "2dde959090472135619cb1b1637d887a1a630faf5a994456bcc42d357c78a7c2",
   "src/retro-timer.js": "f2cdb526a1d1d2f5ebcba81b2c92ca467bf413e43ad556740a6e8a700aa76f97",
@@ -59,5 +59,5 @@
   "src/visual.js": "fdf8423d8ce1c3ca7a8b7b8e454ce4588240aee777c149e5c8e7df907714a43b",
   "src/workflows.js": "8924bb6667b7435e096f83047dcf296ba54285418b5dda2ce0a2af108e4b443e",
   "styles.css": "9d20aab2d12380d3371af5decec02e3fe6809a2519570250867cdf2e6b2df472",
-  "sw.js": "338d7f8eeea9b953e4cea2dd8b1313326bdde9bb63bfad5c5e99bf830ab910b7"
+  "sw.js": "ccf2700b6fefae95bce08a1a18d38d102e54aa4ae6ea98c5526e1c8d2250cda7"
 }

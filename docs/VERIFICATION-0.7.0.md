@@ -14,7 +14,7 @@ Les procédés de conservation et les sources horticoles préexistants sont cons
 
 ## Contrôles exécutés
 
-- Node.js : suite complète, 136 tests réussis ; contrôles de syntaxe et ressources réussis.
+- Node.js : suite complète, 137 tests réussis ; contrôles de syntaxe et ressources réussis.
 - Tests sur carnet rempli : photos, annotations, menus figés, courses, récoltes et réserves déjà couverts par la suite ; nouveaux tests de migration V2 sans mutation, persistance des secrets et convives, export/restauration et conflits de fusion.
 - Service worker : cycle simulé, échec partiel d’installation, conservation de l’ancienne version, cache des modules, polices et assets locaux et reprise avec ancien paramètre de version.
 
@@ -39,3 +39,5 @@ Le navigateur affiche « prêt pour une ouverture sans réseau » après install
 Écarts visuels assumés : les pages longues défilent ; aucun texte n’est réduit pour reproduire la hauteur fixe des planches. Les cartouches et le minuteur sont réalisés en HTML/CSS/SVG ; leur tracé diffère légèrement du dessin. Les données personnelles illustrées dans les maquettes ne sont pas préremplies.
 
 Correction 0.7.2 : pendant le contrôle de mise à jour, la page d’entrée est restée en 0.7.0 alors que la nouvelle version était disponible. Le préchargement des ressources utilise maintenant des requêtes `cache: reload` afin de ne pas recopier une ancienne page depuis le cache HTTP dans un nouveau cache applicatif. Le test du cycle d’installation vérifie aussi ce mode de requête. Le diagnostic visible de la page de contrôle permet de vérifier la version de la page réellement mise en cache et le nombre de ressources.
+
+La mise à jour peut aussi être appliquée explicitement depuis les préférences ou le contrôle mobile : une attente persistante a été observée dans le navigateur de contrôle malgré la fermeture des onglets visibles. L’activation immédiate exige un message envoyé par ce bouton ; l’installation seule ne force pas les pages ouvertes. Le nouveau test vérifie ce comportement.

@@ -60,4 +60,4 @@ Les contrôles et limites de cette livraison sont consignés dans `docs/VERIFICA
 
 Les maquettes validées du 16 octobre habillent les huit écrans. Les motifs fleuris, dessins et couches de patine restent décoratifs ; les textes et actions sont sélectionnables. Le catalogue de 150 fiches est conservé. Les secrets de fabrication sont des notes personnelles enregistrables et modifiables, incluses dans les sauvegardes V2. La reprise en cuisine conserve son étape et son minuteur. Les convives choisis sont enregistrés par recette.
 
-Contrôles : `npm test` (136 tests), `npm run check`. Voir `docs/VERIFICATION-0.7.0.md`. Pour examiner les largeurs de 360, 390 et 430 px : `controle-maquettes.html`.
+Contrôles : `npm test` (137 tests), `npm run check`. Voir `docs/VERIFICATION-0.7.0.md`. Pour examiner les largeurs de 360, 390 et 430 px : `controle-maquettes.html`.

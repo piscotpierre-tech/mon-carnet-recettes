@@ -70,7 +70,7 @@ self.addEventListener('install',event=>{
     try{const cache=await caches.open(CACHE);await cache.addAll(SHELL.map(path=>new Request(new URL(path,scope).href,{cache:'reload'})));}
     catch(error){await caches.delete(CACHE);throw error;}
   })());
-  // No skipWaiting: an update starts after all old carnet tabs are closed.
+  // Keep open notebooks stable; activation is automatic after tabs close, or explicit through the update button.
 });
 self.addEventListener('activate',event=>{
   event.waitUntil((async()=>{
@@ -89,4 +89,8 @@ self.addEventListener('fetch',event=>{
     const cached=await cache.match(navigation?new URL('./index.html',scope).href:request);
     return cached??fetch(request);
   })());
+});
+
+self.addEventListener('message',event=>{
+  if(event.data?.type==='ACTIVATE_CARNET_UPDATE')event.waitUntil(self.skipWaiting());
 });
