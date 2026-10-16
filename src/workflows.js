@@ -1,4 +1,4 @@
-import {id,scaledQuantity,normalize,validateNotebook} from './domain.js?v=0.6.3';
+import {id,scaledQuantity,normalize,validateNotebook} from './domain.js?v=0.6.4';
 export const dayString=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 export function monday(date=new Date()){const d=new Date(date);d.setDate(d.getDate()-(d.getDay()+6)%7);return dayString(d);}
 export function shiftDay(day,amount){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+amount);return dayString(d);}
@@ -11,13 +11,15 @@ export function timerAction(timer,action,value,now=Date.now()){
   if(action==='reset'){next.remainingMs=next.durationMs;next.running=false;next.endAt=null;}
   return next;
 }
-export function beginCooking(book,recipe,servings){
+export function beginCooking(book,recipe,servings,{menuId}={}){
   if(!recipe.steps.length)throw new Error('Ajoutez au moins une étape à cette recette avant de passer en cuisine.');
-  const next=structuredClone(book);next.cooking={snapshot:{...structuredClone(recipe),photoId:null},servings,stepIndex:0,completed:[],timer:{name:recipe.title.slice(0,120),durationMs:300000,remainingMs:300000,running:false,endAt:null}};return validateNotebook(next);
+  const next=structuredClone(book);next.cooking={snapshot:{...structuredClone(recipe),photoId:null},servings,stepIndex:0,completed:[],...(menuId?{menuId}:{}),timer:{name:recipe.title.slice(0,120),durationMs:300000,remainingMs:300000,running:false,endAt:null}};return validateNotebook(next);
 }
-export function setMenu(book,{date,slot,recipeId,servings}){
+export function setMenu(book,{date,slot,recipeId,servings,menuId,refreshRecipe=false}){
   const next=structuredClone(book),recipe=next.recipes.find(r=>r.id===recipeId);if(!recipe)throw new Error('Choisissez une recette du carnet.');
-  next.menus=next.menus.filter(m=>!(m.date===date&&m.slot===slot));next.menus.push({id:id(),date,slot,recipeId,servings,snapshot:{...structuredClone(recipe),photoId:null}});return validateNotebook(next);
+  const current=menuId?next.menus.find(m=>m.id===menuId):null;if(menuId&&!current)throw new Error('Ce repas est introuvable.');
+  const snapshot=current?.recipeId===recipeId&&!refreshRecipe?current.snapshot:{...structuredClone(recipe),photoId:null};
+  next.menus=next.menus.filter(m=>m.id!==menuId&&!(m.date===date&&m.slot===slot));next.menus.push({id:current?.id??id(),date,slot,recipeId,servings,snapshot});return validateNotebook(next);
 }
 function amountBase(ingredient,servings,reference){
   let quantity=scaledQuantity(ingredient,reference,servings),unit=ingredient.unit;

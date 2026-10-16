@@ -1,4 +1,4 @@
-# Mon carnet de recettes — 0.6.3
+# Mon carnet de recettes — 0.6.4
 
 Couverture issue du véritable cahier de Pierre, sommaire en six chapitres, papier patiné et minuteur à molette manipulable.
 
@@ -26,7 +26,7 @@ Tests : `npm test` et `npm run check` (Node 22 ou ultérieur). Aucun paquet à i
 
 La page `verification-0.3.0/controle-mobile.html` permet de consulter la version de recette dans des fenêtres de 360, 375, 390, 412 ou 430 px. Ses données restent séparées du carnet principal. Les sources, tests et captures sont documentés dans `docs/VERIFICATION-0.3.0.md`.
 
-Exporter régulièrement le carnet depuis « Préférences et sauvegardes ». L’application ne synchronise pas les appareils et ne stocke aucune donnée personnelle sur GitHub. La fermeture d’un navigateur ne déclenche pas de sonnerie garantie ; l’ouverture hors ligne n’est pas garantie.
+Exporter régulièrement le carnet depuis « Préférences et sauvegardes ». L’application ne synchronise pas les appareils et ne stocke aucune donnée personnelle sur GitHub. La fermeture d’un navigateur ne déclenche pas de sonnerie garantie. Le carnet prépare ses ressources pour une ouverture sans réseau : attendre la mention « Le carnet est prêt » dans les préférences avant de couper la connexion. La première ouverture demande du réseau ; les liens extérieurs aussi. Les essais réels en mode avion restent à exécuter.
 
 Validation de cette intégration : 75 tests automatisés réussis et contrôles statiques. Le contrôle visuel mobile des nouvelles fiches n’a pas été exécuté dans ce lot. Voir `docs/VERIFICATION-0.4.1.md`.
 
@@ -43,3 +43,15 @@ Les récoltes acceptent une quantité pesée, comptée ou inconnue. Elles peuven
 Validation 0.5.1 : 103 tests automatisés réussis et contrôles statiques réussis. Voir `docs/VERIFICATION-0.5.1.md`. Les anciennes sauvegardes restent acceptées ; l’export conserve les nouvelles données. Aucun contrôle visuel mobile n’a été exécuté dans ce lot.
 
 Validation 0.6.0 : 116 tests automatisés réussis, contrôles statiques et copie autonome vérifiés. Les 712 quantités et unités ont été recoupées directement dans les deux PDF. Voir `docs/VERIFICATION-0.6.0.md`. Aucun contrôle visuel en navigateur ou sur téléphone n’a été exécuté pour cette version.
+
+## Corrections après audit — 0.6.4
+
+Un repas ouvre désormais sa version enregistrée et ses convives, conservés jusqu’en cuisine. La consultation d’une fiche pour une autre tablée ne change pas le repas. Dans le menu, changer les convives conserve la version enregistrée ; une case explicite permet de reprendre la fiche actuelle. Les courses suivent toujours les menus enregistrés et se recalculent par leur commande habituelle.
+
+Les fiches du catalogue affichent « À essayer en cuisine » ou « Essayée en cuisine » selon leurs données ; l’origine reste consultable dans un détail. Aucune recette n’a été déclarée essayée par cette correction.
+
+Le service worker met les ressources locales en cache après un téléchargement complet. Une installation incomplète laisse l’ancienne version disponible. La nouvelle version attend la fermeture des anciens onglets ; elle ne touche pas aux données IndexedDB. Le manifeste conserve l’ouverture sur la couverture. La couverture, les illustrations et le papier lisse restent inchangés.
+
+Le parcours retenu par le brief actuel reste : couverture → « Ouvrir le carnet » → sommaire. L’ancienne proposition AUD-04 de feuille intermédiaire n’est pas appliquée.
+
+Les contrôles et limites de cette livraison sont consignés dans `docs/VERIFICATION-0.6.4.md`.

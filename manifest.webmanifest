@@ -1,0 +1,11 @@
+{
+  "name": "Mon carnet de recettes — Pierre",
+  "short_name": "Mes recettes",
+  "lang": "fr",
+  "id": "./",
+  "start_url": "./#accueil",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6e9c9",
+  "theme_color": "#f6e9c9"
+}
