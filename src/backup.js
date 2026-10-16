@@ -1,4 +1,4 @@
-import {APP, APP_VERSION, SCHEMA_VERSION, LIMITS, validateNotebook, mergeNotebooks, migrateNotebook} from './domain.js?v=0.6.2';
+import {APP, APP_VERSION, SCHEMA_VERSION, LIMITS, validateNotebook, mergeNotebooks, migrateNotebook} from './domain.js?v=0.6.3';
 
 export async function digest(value) {
   const bytes = typeof value === 'string' ? new TextEncoder().encode(value) : value;

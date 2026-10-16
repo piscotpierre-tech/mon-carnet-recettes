@@ -1,8 +1,8 @@
-# Mon carnet de recettes — 0.6.2
+# Mon carnet de recettes — 0.6.3
 
 Couverture issue du véritable cahier de Pierre, sommaire en six chapitres, papier patiné et minuteur à molette manipulable.
 
-Le papier est légèrement plus ambré et fibreux, avec des traces de vin et de gras plus visibles, des coins marqués et une usure discrète sur la couverture.
+Le fond crème reste lisse pour la lecture : les stries et les motifs répétitifs de papier sont retirés. Les marges gardent une patine douce et irrégulière, les traces de cuisine et les coins usés. La couverture illustrée est conservée.
 
 « Menu de la semaine » est accessible directement dans le sommaire, entre « Mes recettes » et « Ma liste de courses ».
 
