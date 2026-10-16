@@ -1,0 +1,70 @@
+[
+  {
+    "path": "index.html",
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "bytes": 1175,
+    "sha256": "2798aed5b2323c99edf3f00cab403913e8925623630f025a88d808c96af0ae3e",
+    "dimensions": null
+  },
+  {
+    "path": "manifest.webmanifest",
+    "status": 200,
+    "type": "application/manifest+json; charset=utf-8",
+    "bytes": 538,
+    "sha256": "5272bda8239c0933326e47f673e762400be674d235d533ad0027886bc35a7968",
+    "dimensions": null
+  },
+  {
+    "path": "sw.js",
+    "status": 200,
+    "type": "application/javascript; charset=utf-8",
+    "bytes": 3880,
+    "sha256": "acccbf5b0b1e44fcb5bca6d3dcac5b02318ea118fe9a72cd44aea01c2518897c",
+    "dimensions": null
+  },
+  {
+    "path": "assets/icons/icon-192.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": 88798,
+    "sha256": "11c05b6cffdb188ed6edbdec349cf80884e8d9c179c0d7d271591343cf01da46",
+    "dimensions": [
+      192,
+      192
+    ]
+  },
+  {
+    "path": "assets/icons/icon-512.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": 582437,
+    "sha256": "6eb76a0597380af22042ba9d63017d8ba18165c1fe8ac74bce42bef2dba78a5b",
+    "dimensions": [
+      512,
+      512
+    ]
+  },
+  {
+    "path": "assets/icons/apple-touch-icon.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": 78511,
+    "sha256": "5a27fa66d88e8e89afc0fb2c726932dcb229f041ae0ebc5ef458968be9facbe3",
+    "dimensions": [
+      180,
+      180
+    ]
+  },
+  {
+    "path": "assets/icons/favicon-32.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": 2906,
+    "sha256": "b681d4456aa8c717ace0f5f4827fd3f7d5bff99cc8941923cbaf22782d473ea6",
+    "dimensions": [
+      32,
+      32
+    ]
+  }
+]
