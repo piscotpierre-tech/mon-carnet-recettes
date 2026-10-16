@@ -1,30 +1,30 @@
 // Application resources only. Personal data stays in IndexedDB.
 const scope=new URL(self.registration.scope);
 const CACHE_PREFIX='carnet-shell:'+encodeURIComponent(scope.pathname)+':';
-const CACHE=CACHE_PREFIX+'0.7.1';
+const CACHE=CACHE_PREFIX+'0.7.2';
 const SHELL=[
   "./index.html",
   "./manifest.webmanifest",
-  "./styles.css?v=0.7.1",
-  "./src/additional-catalogue-data.js?v=0.7.1",
-  "./src/app.js?v=0.7.1",
-  "./src/backup.js?v=0.7.1",
-  "./src/catalogue-data.js?v=0.7.1",
-  "./src/catalogue.js?v=0.7.1",
-  "./src/domain.js?v=0.7.1",
-  "./src/examples.js?v=0.7.1",
-  "./src/garden-pantry-data.js?v=0.7.1",
-  "./src/garden-pantry-ui.js?v=0.7.1",
-  "./src/garden-pantry.js?v=0.7.1",
-  "./src/metric.js?v=0.7.1",
-  "./src/offline.js?v=0.7.1",
-  "./src/page-turn.js?v=0.7.1",
-  "./src/photos.js?v=0.7.1",
-  "./src/retro-timer.js?v=0.7.1",
-  "./src/secrets.js?v=0.7.1",
-  "./src/storage.js?v=0.7.1",
-  "./src/visual.js?v=0.7.1",
-  "./src/workflows.js?v=0.7.1",
+  "./styles.css?v=0.7.2",
+  "./src/additional-catalogue-data.js?v=0.7.2",
+  "./src/app.js?v=0.7.2",
+  "./src/backup.js?v=0.7.2",
+  "./src/catalogue-data.js?v=0.7.2",
+  "./src/catalogue.js?v=0.7.2",
+  "./src/domain.js?v=0.7.2",
+  "./src/examples.js?v=0.7.2",
+  "./src/garden-pantry-data.js?v=0.7.2",
+  "./src/garden-pantry-ui.js?v=0.7.2",
+  "./src/garden-pantry.js?v=0.7.2",
+  "./src/metric.js?v=0.7.2",
+  "./src/offline.js?v=0.7.2",
+  "./src/page-turn.js?v=0.7.2",
+  "./src/photos.js?v=0.7.2",
+  "./src/retro-timer.js?v=0.7.2",
+  "./src/secrets.js?v=0.7.2",
+  "./src/storage.js?v=0.7.2",
+  "./src/visual.js?v=0.7.2",
+  "./src/workflows.js?v=0.7.2",
   "./assets/atelier/basil.webp",
   "./assets/atelier/basket.webp",
   "./assets/atelier/carrots.webp",
@@ -67,7 +67,7 @@ const shellURLs=new Set(SHELL.map(path=>new URL(path,scope).href));
 self.addEventListener('install',event=>{
   // A partial download must never replace the last complete release.
   event.waitUntil((async()=>{
-    try{const cache=await caches.open(CACHE);await cache.addAll(SHELL.map(path=>new URL(path,scope).href));}
+    try{const cache=await caches.open(CACHE);await cache.addAll(SHELL.map(path=>new Request(new URL(path,scope).href,{cache:'reload'})));}
     catch(error){await caches.delete(CACHE);throw error;}
   })());
   // No skipWaiting: an update starts after all old carnet tabs are closed.

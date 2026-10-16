@@ -1,4 +1,4 @@
-import {id,scaledQuantity,normalize,validateNotebook} from './domain.js?v=0.7.1';
+import {id,scaledQuantity,normalize,validateNotebook} from './domain.js?v=0.7.2';
 export const dayString=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 export function monday(date=new Date()){const d=new Date(date);d.setDate(d.getDate()-(d.getDay()+6)%7);return dayString(d);}
 export function shiftDay(day,amount){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+amount);return dayString(d);}

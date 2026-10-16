@@ -15,11 +15,11 @@ function worker({failAt=null}={}){
  const cacheFor=name=>{
   if(!stores.has(name))stores.set(name,new Map());
   const rows=stores.get(name);
-  return {async addAll(paths){for(const path of paths){fetched.push(path);if(failAt&&path.includes(failAt))throw Error('Réseau coupé');rows.set(path,new Response('cached:'+path));}},async match(key){return rows.get(typeof key==='string'?key:key.url)?.clone();}};
+  return {async addAll(paths){for(const request of paths){const path=typeof request==='string'?request:request.url;if(typeof request!=='string')assert.equal(request.cache,'reload');fetched.push(path);if(failAt&&path.includes(failAt))throw Error('Réseau coupé');rows.set(path,new Response('cached:'+path));}},async match(key){return rows.get(typeof key==='string'?key:key.url)?.clone();}};
  };
  const caches={open:async name=>cacheFor(name),keys:async()=>[...stores.keys()],delete:async name=>stores.delete(name)};
  const self={registration:{scope:base},clients:{claim:async()=>{claimed=true;}},addEventListener(name,fn){handlers[name]=fn;}};
- vm.runInNewContext(code,{self,caches,URL,fetch:async()=>{throw Error('Hors ligne');}});
+ vm.runInNewContext(code,{self,caches,URL,Request,fetch:async()=>{throw Error('Hors ligne');}});
  const lifecycle=async name=>{let promise;handlers[name]({waitUntil(value){promise=value;}});await promise;};
  const request=async(url,overrides={})=>{
   let response;handlers.fetch({request:{url,method:'GET',mode:'cors',...overrides},respondWith(value){response=value;}});

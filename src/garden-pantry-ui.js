@@ -1,9 +1,9 @@
-import {esc,art,heading,section,action} from './visual.js?v=0.7.1';
-import {displayQuantity} from './domain.js?v=0.7.1';
-import {dayString} from './workflows.js?v=0.7.1';
-import {GARDEN_GUIDES,COMMON_CANNING} from './garden-pantry-data.js?v=0.7.1';
-import {linkedRecipes,reserveStatus} from './garden-pantry.js?v=0.7.1';
-import {metricPreparation,metricCommon,metricText,metricQuantity,altitudeMeters} from './metric.js?v=0.7.1';
+import {esc,art,heading,section,action} from './visual.js?v=0.7.2';
+import {displayQuantity} from './domain.js?v=0.7.2';
+import {dayString} from './workflows.js?v=0.7.2';
+import {GARDEN_GUIDES,COMMON_CANNING} from './garden-pantry-data.js?v=0.7.2';
+import {linkedRecipes,reserveStatus} from './garden-pantry.js?v=0.7.2';
+import {metricPreparation,metricCommon,metricText,metricQuantity,altitudeMeters} from './metric.js?v=0.7.2';
 const button=(label,task,value='')=>`<button type="button" data-action="${task}" data-value="${esc(value)}">${esc(label)}</button>`;
 const sourceLink=(label,url)=>/^https:\/\//.test(url)?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`:esc(label);
 export function plantAdvice(kind){

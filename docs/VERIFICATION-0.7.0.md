@@ -1,4 +1,4 @@
-# 0.7.1 — Huit feuilles du carnet
+# 0.7.2 — Huit feuilles du carnet
 
 Base : `fea60ce` (0.6.4, branche `codex/audit-0.6.4`), descendante de la 0.6.3 publiée. Travail isolé sur `codex/maquettes-carnet-0.7.0`. Aucun autre espace de travail modifié.
 
@@ -37,3 +37,5 @@ Sonnerie lorsque l’onglet est suspendu ou fermé non garantie. Écran maintenu
 Le navigateur affiche « prêt pour une ouverture sans réseau » après installation effective du service worker. Le cycle hors ligne est aussi couvert par les simulations Node. Le navigateur de contrôle ne fournit pas de commande pour couper son réseau : aucune réouverture en mode avion réel ni essai sur Android physique n’est revendiqué. La sonnerie visuelle de fin a été observée ; le son audible et son fonctionnement en arrière-plan ne sont pas certifiés par cet environnement.
 
 Écarts visuels assumés : les pages longues défilent ; aucun texte n’est réduit pour reproduire la hauteur fixe des planches. Les cartouches et le minuteur sont réalisés en HTML/CSS/SVG ; leur tracé diffère légèrement du dessin. Les données personnelles illustrées dans les maquettes ne sont pas préremplies.
+
+Correction 0.7.2 : pendant le contrôle de mise à jour, la page d’entrée est restée en 0.7.0 alors que la nouvelle version était disponible. Le préchargement des ressources utilise maintenant des requêtes `cache: reload` afin de ne pas recopier une ancienne page depuis le cache HTTP dans un nouveau cache applicatif. Le test du cycle d’installation vérifie aussi ce mode de requête. Le diagnostic visible de la page de contrôle permet de vérifier la version de la page réellement mise en cache et le nombre de ressources.
