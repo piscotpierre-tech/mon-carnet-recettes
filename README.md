@@ -1,4 +1,4 @@
-# Mon carnet de recettes — 0.7.3
+# Mon carnet de recettes — 0.7.4
 
 Couverture issue du véritable cahier de Pierre, sommaire en six chapitres, papier patiné et minuteur à molette manipulable.
 
@@ -63,3 +63,7 @@ Les maquettes validées du 16 octobre habillent les huit écrans. Les motifs fle
 Contrôles : `npm test` (137 tests), `npm run check`. Voir `docs/VERIFICATION-0.7.3.md`. Pour examiner les largeurs de 360, 390 et 430 px : `controle-maquettes.html`.
 
 Les 36 vues contrôlées et les huit captures de la version finale sont documentées dans `docs/VERIFICATION-0.7.3.md`.
+
+## Icône du raccourci — 0.7.4
+
+La cocotte rouge du carnet est déclarée dans le manifeste (PNG 192 et 512 px, zone sûre Android), avec une icône Apple de 180 px et une icône d’onglet de 32 px. Ces images sont incluses dans le cache hors ligne. Les données et l’identité de l’application restent conservées. Voir `docs/VERIFICATION-0.7.4.md`.

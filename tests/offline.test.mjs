@@ -91,6 +91,40 @@ test('l’interface distingue préparation, prêt, mise à jour, échec et navig
  for(const state of ['preparing','ready','update','failed','unavailable'])assert.ok(offlineMessage(state));
 });
 
+test('les icônes d’installation PNG ont les dimensions annoncées et restent dans le chemin GitHub Pages',async()=>{
+ const manifest=JSON.parse(await readFile(new URL('manifest.webmanifest',root),'utf8'));
+ assert.equal(manifest.id,'./');
+ assert.ok(manifest.icons.some(i=>i.sizes==='192x192'&&i.purpose.split(' ').includes('any')));
+ assert.ok(manifest.icons.some(i=>i.sizes==='512x512'&&i.purpose.split(' ').includes('maskable')));
+ for(const icon of manifest.icons){
+  assert.equal(icon.type,'image/png');
+  assert.ok(new URL(icon.src,base).href.startsWith(base+'assets/icons/'));
+  const png=await readFile(new URL(icon.src,root));
+  assert.equal(png.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+  assert.equal(`${png.readUInt32BE(16)}x${png.readUInt32BE(20)}`,icon.sizes);
+  assert.equal(png[25],2,'PNG opaque RGB, sans canal alpha');
+ }
+});
+
+test('le raccourci Apple et l’icône d’onglet pointent sur de vraies images locales, toutes conservées hors ligne',async()=>{
+ const html=await readFile(new URL('index.html',root),'utf8');
+ const w=worker();await w.lifecycle('install');
+ const manifest=JSON.parse(await readFile(new URL('manifest.webmanifest',root),'utf8'));
+ const linked=[...html.matchAll(/<link\s+rel="(apple-touch-icon|icon)"[^>]*sizes="(\d+)x\d+"[^>]*href="([^"]+)"/g)];
+ assert.ok(linked.some(m=>m[1]==='apple-touch-icon'&&m[2]==='180'));
+ assert.ok(linked.some(m=>m[1]==='icon'&&m[2]==='32'));
+ for(const [,kind,size,path]of linked){
+  const png=await readFile(new URL(path,root));
+  assert.equal(png.readUInt32BE(16),Number(size),kind);
+  assert.equal(png.readUInt32BE(20),Number(size),kind);
+ }
+ for(const path of [...linked.map(m=>m[3]),...manifest.icons.map(i=>i.src)]){
+  const url=new URL(path,base).href;
+  assert.ok(w.fetched.includes(url),path+' absent du cache');
+  assert.equal(await w.request(url),'cached:'+url);
+ }
+});
+
 test('la mise à jour ne s’active immédiatement que sur demande explicite, après installation',async()=>{
  const w=worker();await w.lifecycle('install');assert.equal(w.skipped,false);
  let result;w.handlers.message({data:{type:'OTHER'},waitUntil(p){result=p;}});assert.equal(w.skipped,false);

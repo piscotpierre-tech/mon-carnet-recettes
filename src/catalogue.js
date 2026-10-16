@@ -1,7 +1,7 @@
-import {validateNotebook, LIMITS} from './domain.js?v=0.7.3';
-import {exampleNotebook} from './examples.js?v=0.7.3';
-import {CATALOGUE_INFO, CATALOGUE_RECIPES} from './catalogue-data.js?v=0.7.3';
-import {ADDITIONAL_CATALOGUES, ADDITIONAL_RECIPES} from './additional-catalogue-data.js?v=0.7.3';
+import {validateNotebook, LIMITS} from './domain.js?v=0.7.4';
+import {exampleNotebook} from './examples.js?v=0.7.4';
+import {CATALOGUE_INFO, CATALOGUE_RECIPES} from './catalogue-data.js?v=0.7.4';
+import {ADDITIONAL_CATALOGUES, ADDITIONAL_RECIPES} from './additional-catalogue-data.js?v=0.7.4';
 
 export {CATALOGUE_INFO, CATALOGUE_RECIPES, ADDITIONAL_CATALOGUES, ADDITIONAL_RECIPES};
 const allSources=new Map([...CATALOGUE_RECIPES,...ADDITIONAL_RECIPES].map(r=>[r.id,r]));
