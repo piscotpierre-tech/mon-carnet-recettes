@@ -1,16 +1,16 @@
-import {APP_VERSION,LIMITS,CATEGORIES,UNITS,STATES,COMPONENTS,blankRecipe,id,withRecipe,validateNotebook,searchRecipes,scaledQuantity,displayQuantity,exclusions} from './domain.js?v=0.6.0';
-import {NotebookStore,friendlyStorageError} from './storage.js?v=0.6.0';
-import {makeBackup,readBackup,prepareMerge} from './backup.js?v=0.6.0';
-import {preparePhoto,verifyPhotoDecoding} from './photos.js?v=0.6.0';
-import {installCatalogue, installAdditionalCatalogues, catalogueCount, ingredientGroups, methodText, hasOriginalMethod, culinaryMethod, ingredientPreparation} from './catalogue.js?v=0.6.0';
-import {dayString,monday,shiftDay,remaining,timerAction,beginCooking,setMenu,rebuildShopping,harvestToReserve} from './workflows.js?v=0.6.0';
-import {esc,art,artwork,banner,flowers,coverDecor,frame,heading,section,action,tools} from './visual.js?v=0.6.0';
-import {capturePageTurn,playPageTurn} from './page-turn.js?v=0.6.0';
-import {retroTimer,wireTimerDial,updateTimerDial} from './retro-timer.js?v=0.6.0';
-import {installGardenPantry,installMetricPantry,addPantryLot,openPantryJar,useReserve,undoReserveUse} from './garden-pantry.js?v=0.6.0';
-import {GARDEN_GUIDES} from './garden-pantry-data.js?v=0.6.0';
-import {plantAdvice,gardenGuideCards,recipeLinks,procedureBody,lotForm,lotSummary,reserveBody} from './garden-pantry-ui.js?v=0.6.0';
-import {metricPreparation,metricQuantity,fromMetricQuantity,metricText} from './metric.js?v=0.6.0';
+import {APP_VERSION,LIMITS,CATEGORIES,UNITS,STATES,COMPONENTS,blankRecipe,id,withRecipe,validateNotebook,searchRecipes,scaledQuantity,displayQuantity,exclusions} from './domain.js?v=0.6.1';
+import {NotebookStore,friendlyStorageError} from './storage.js?v=0.6.1';
+import {makeBackup,readBackup,prepareMerge} from './backup.js?v=0.6.1';
+import {preparePhoto,verifyPhotoDecoding} from './photos.js?v=0.6.1';
+import {installCatalogue, installAdditionalCatalogues, catalogueCount, ingredientGroups, methodText, hasOriginalMethod, culinaryMethod, ingredientPreparation} from './catalogue.js?v=0.6.1';
+import {dayString,monday,shiftDay,remaining,timerAction,beginCooking,setMenu,rebuildShopping,harvestToReserve} from './workflows.js?v=0.6.1';
+import {esc,art,artwork,banner,flowers,coverDecor,frame,heading,section,action,tools} from './visual.js?v=0.6.1';
+import {capturePageTurn,playPageTurn} from './page-turn.js?v=0.6.1';
+import {retroTimer,wireTimerDial,updateTimerDial} from './retro-timer.js?v=0.6.1';
+import {installGardenPantry,installMetricPantry,addPantryLot,openPantryJar,useReserve,undoReserveUse} from './garden-pantry.js?v=0.6.1';
+import {GARDEN_GUIDES} from './garden-pantry-data.js?v=0.6.1';
+import {plantAdvice,gardenGuideCards,recipeLinks,procedureBody,lotForm,lotSummary,reserveBody} from './garden-pantry-ui.js?v=0.6.1';
+import {metricPreparation,metricQuantity,fromMetricQuantity,metricText} from './metric.js?v=0.6.1';
 const main=document.querySelector('#app'),message=document.querySelector('#message'),store=new NotebookStore();
 let book,draft,dirty=false,busy=false,photoFile,removePhoto=false,stagedBackup,urls=[],lastRoute='#accueil',week=monday(),category='',searchQuery='',plantSpace='Pot',audioContext,wakeLock,expiredKey='';
 const servingsById=new Map();
@@ -36,8 +36,8 @@ function home(){
  page('LE CARNET DE PIERRE',`<div class="cover-panel">${coverDecor()}<h1 class="cover-title">Mon carnet<br>de recettes<span class="cover-sub">Le carnet de Pierre</span></h1><div class="cover-pot">${art('cocotte')}</div><p class="cover-invitation hand">À vos tabliers !</p><div class="cover-open">${action('Ouvrir le carnet','#sommaire')}</div>${markedRecipe?`<a class="cover-herb" href="#recette/${markedRecipe.id}" aria-label="Retrouver ma recette marquée : ${esc(markedRecipe.title)}">${art('rosemaryMarker')}<span class="hand">Ma recette<br>marquée</span></a>`:''}</div>`,[],'cover closed-cover');
 }
 function index(){
- const rows=[['Le marché','Produits et idées','chapterMarket','#marche'],['Mon petit coin de verdure','Plantes et récoltes','chapterGarden','#jardin'],['Mes recettes','Assiettes et menus','chapterRecipes','#recettes'],['Ma liste de courses','Les achats à prévoir','chapterShopping','#courses'],['Le garde-manger','Réserves et bocaux','chapterPantry','#garde-manger']];
- page('SOMMAIRE',`<div class="contents-title"><h1>Le carnet de Pierre</h1><span aria-hidden="true">— ● —</span></div><nav class="chapter-list" aria-label="Les cinq chapitres">`+rows.map(([title,annotation,image,to])=>`<a class="chapter-row" href="${to}"><span class="chapter-picture">${art(image)}</span><span class="chapter-copy"><strong>${title}</strong><span class="hand">${annotation}</span></span><span class="chapter-arrow" aria-hidden="true">›</span></a>`).join('')+`</nav>`+marked()+`${book.cooking?`<aside class="cooking-resume"><span class="hand">Préparation en cours</span><strong>${esc(book.cooking.snapshot.title)}</strong><p>Étape ${book.cooking.stepIndex+1} / ${book.cooking.snapshot.steps.length}</p>${action('Reprendre en cuisine','#cuisine')}</aside>`:''}<a class="preferences-link" href="#preferences">Préférences et sauvegardes</a>`,[],'contents-page');
+ const rows=[['Le marché','Produits et idées','chapterMarket','#marche'],['Mon petit coin de verdure','Plantes et récoltes','chapterGarden','#jardin'],['Mes recettes','Assiettes, entrées et desserts','chapterRecipes','#recettes'],['Menu de la semaine','Les repas du midi et du soir','cocotte','#menus'],['Ma liste de courses','Les achats à prévoir','chapterShopping','#courses'],['Le garde-manger','Réserves et bocaux','chapterPantry','#garde-manger']];
+ page('SOMMAIRE',`<div class="contents-title"><h1>Le carnet de Pierre</h1><span aria-hidden="true">— ● —</span></div><nav class="chapter-list" aria-label="Les chapitres du carnet">`+rows.map(([title,annotation,image,to])=>`<a class="chapter-row" href="${to}"><span class="chapter-picture">${art(image)}</span><span class="chapter-copy"><strong>${title}</strong><span class="hand">${annotation}</span></span><span class="chapter-arrow" aria-hidden="true">›</span></a>`).join('')+`</nav>`+marked()+`${book.cooking?`<aside class="cooking-resume"><span class="hand">Préparation en cours</span><strong>${esc(book.cooking.snapshot.title)}</strong><p>Étape ${book.cooking.stepIndex+1} / ${book.cooking.snapshot.steps.length}</p>${action('Reprendre en cuisine','#cuisine')}</aside>`:''}<a class="preferences-link" href="#preferences">Préférences et sauvegardes</a>`,[],'contents-page');
 }
 function recipeList(){
  page('MES RECETTES',`<label class="field">Un titre, un ingrédient…<input id="recipe-search" type="search" value="${esc(searchQuery)}"></label><div class="category-grid">${[['Entrées','bowl'],['Assiettes et plats','cocotte'],['Garnitures','carrots'],['Sauces et bases','gravy'],['Desserts','mold'],['Favoris','kettle']].map(([cat,image])=>`<button data-action="category" data-value="${cat}" class="${category===cat?'selected':''}">${art(image)}${cat==='Assiettes et plats'?'Plats et assiettes':cat}</button>`).join('')}</div>${action('Ajouter une recette','#nouvelle',true)}<div id="recipe-list"></div><div class="actions">${action('Menus de la semaine','#menus')}</div>${marked()}<p class="hand">${catalogueCount(book)} recettes dans le carnet de Pierre.</p>`,['mincer','sieve','mold']);

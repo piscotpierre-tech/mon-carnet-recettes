@@ -1,6 +1,8 @@
-# Mon carnet de recettes — 0.6.0
+# Mon carnet de recettes — 0.6.1
 
-Couverture issue du véritable cahier de Pierre, sommaire en cinq chapitres, papier patiné et minuteur à molette manipulable.
+Couverture issue du véritable cahier de Pierre, sommaire en six chapitres, papier patiné et minuteur à molette manipulable.
+
+« Menu de la semaine » est accessible directement dans le sommaire, entre « Mes recettes » et « Ma liste de courses ».
 
 Les 50 recettes fournies par Pierre (40 assiettes, 5 entrées, 5 desserts) sont intégrées : ingrédients par composant, états de pesée, méthode, temps indicatifs, matériel, conseils de cuisson et astuces du chef.
 
