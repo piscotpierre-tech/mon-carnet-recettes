@@ -125,3 +125,6 @@ h1,h2,h3{letter-spacing:-.6px}.row h2,.row h3{font-size:1.3rem;line-height:1.14}
 .chapter-picture .art,.row>.atelier-art{mask-image:radial-gradient(ellipse 70% 75% at center,#000 65%,transparent 100%)}
 
 html{scrollbar-width:none}.page-turn{max-width:100vw}
+
+/* Le geste se lit comme une consigne ; les grands caractères restent aux titres. */
+.leaf-kitchen .cooking-step{font-size:1.125rem;line-height:1.5;font-weight:400;text-align:left;padding:8px 0;margin-bottom:10px}.leaf-kitchen .step-illustrations .art{max-height:90px}.leaf-kitchen .small{min-height:38px}.leaf-kitchen .small .cartouche{font-size:1rem}.recipe-hero>.atelier-art{mask-image:radial-gradient(ellipse 75% 70% at center,#000 60%,transparent 100%)}

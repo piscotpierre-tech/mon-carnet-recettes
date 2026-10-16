@@ -1,5 +1,5 @@
 export const APP = 'mon-carnet-recettes';
-export const APP_VERSION = '0.7.2';
+export const APP_VERSION = '0.7.3';
 export const SCHEMA_VERSION = 2;
 export const LIMITS = Object.freeze({recipes: 1000, photoBytes: 2 * 1024 * 1024, allPhotosBytes: 30 * 1024 * 1024, backupBytes: 45 * 1024 * 1024});
 export const CATEGORIES = ['Assiettes et plats', 'Entrées', 'Desserts', 'Garnitures', 'Sauces et bases'];

@@ -1,4 +1,4 @@
-# 0.7.2 — Huit feuilles du carnet
+# 0.7.3 — Huit feuilles du carnet
 
 Base : `fea60ce` (0.6.4, branche `codex/audit-0.6.4`), descendante de la 0.6.3 publiée. Travail isolé sur `codex/maquettes-carnet-0.7.0`. Aucun autre espace de travail modifié.
 
@@ -41,3 +41,5 @@ Le navigateur affiche « prêt pour une ouverture sans réseau » après install
 Correction 0.7.2 : pendant le contrôle de mise à jour, la page d’entrée est restée en 0.7.0 alors que la nouvelle version était disponible. Le préchargement des ressources utilise maintenant des requêtes `cache: reload` afin de ne pas recopier une ancienne page depuis le cache HTTP dans un nouveau cache applicatif. Le test du cycle d’installation vérifie aussi ce mode de requête. Le diagnostic visible de la page de contrôle permet de vérifier la version de la page réellement mise en cache et le nombre de ressources.
 
 La mise à jour peut aussi être appliquée explicitement depuis les préférences ou le contrôle mobile : une attente persistante a été observée dans le navigateur de contrôle malgré la fermeture des onglets visibles. L’activation immédiate exige un message envoyé par ce bouton ; l’installation seule ne force pas les pages ouvertes. Le nouveau test vérifie ce comportement.
+
+Finition 0.7.3 : le texte intégral de l’étape en cuisine est ramené à un corps de lecture de 18 px pour mieux dégager le minuteur, sans supprimer de consigne. L’arrosoir est extrait de la nouvelle planche pour rester cohérent avec les plantes.

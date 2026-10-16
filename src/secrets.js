@@ -1,4 +1,4 @@
-import {id,validateNotebook} from './domain.js?v=0.7.2';
+import {id,validateNotebook} from './domain.js?v=0.7.3';
 export function blankSecret(){return {id:id(),title:'',recipeReference:'',waterMl:null,sugarG:null,perfumes:'',preparationNotes:'',date:'',lot:'',trials:'',tips:'',source:''};}
 export function saveSecret(book,secret){
  const next=structuredClone(book);next.secrets??=[];

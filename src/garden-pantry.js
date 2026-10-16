@@ -1,6 +1,6 @@
-import {id,validateNotebook,normalize,exclusions} from './domain.js?v=0.7.2';
-import {dayString} from './workflows.js?v=0.7.2';
-import {GARDEN_PANTRY_ID,PANTRY_PREPARATIONS,WEIGHED_JAM} from './garden-pantry-data.js?v=0.7.2';
+import {id,validateNotebook,normalize,exclusions} from './domain.js?v=0.7.3';
+import {dayString} from './workflows.js?v=0.7.3';
+import {GARDEN_PANTRY_ID,PANTRY_PREPARATIONS,WEIGHED_JAM} from './garden-pantry-data.js?v=0.7.3';
 export function installGardenPantry(book){
  validateNotebook(book);
  if(book.catalogueIds?.includes(GARDEN_PANTRY_ID))return {notebook:book,changed:false};

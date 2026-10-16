@@ -8,7 +8,7 @@ export const artwork={
 };
 export const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const assetPath=file=>globalThis.CDR_ASSETS?.[file]??`./assets/${file}.webp`;
-const atelier={cocotte:'pot',chapterRecipes:'pot',chapterMarket:'market',chapterGarden:'basil',chapterShopping:'basket',chapterPantry:'jam',chapterMenus:'menus',carrots:'carrots',pumpkin:'pumpkin',mushrooms:'mushrooms',basil:'basil',strawberry:'strawberries',marketBasket:'basket',jar:'jar-pears',jam:'jar-jam',pickles:'jar-pickles',berries:'strawberries',dish:'dish',leek:'leeks',shallot:'shallot',pantryStill:'pantry',secretsStill:'secrets',copper:'copper'};
+const atelier={watering:'watering',cocotte:'pot',chapterRecipes:'pot',chapterMarket:'market',chapterGarden:'basil',chapterShopping:'basket',chapterPantry:'jam',chapterMenus:'menus',carrots:'carrots',pumpkin:'pumpkin',mushrooms:'mushrooms',basil:'basil',strawberry:'strawberries',marketBasket:'basket',jar:'jar-pears',jam:'jar-jam',pickles:'jar-pickles',berries:'strawberries',dish:'dish',leek:'leeks',shallot:'shallot',pantryStill:'pantry',secretsStill:'secrets',copper:'copper'};
 let artId=0;
 export function art(name,classes=''){
  if(atelier[name])return `<img class="art atelier-art ${classes}" src="./assets/atelier/${atelier[name]}.webp" alt="" aria-hidden="true" draggable="false">`;
