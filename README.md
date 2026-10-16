@@ -1,4 +1,4 @@
-# Mon carnet de recettes — 0.7.0
+# Mon carnet de recettes — 0.7.1
 
 Couverture issue du véritable cahier de Pierre, sommaire en six chapitres, papier patiné et minuteur à molette manipulable.
 
@@ -56,8 +56,8 @@ Le parcours retenu par le brief actuel reste : couverture → « Ouvrir le carne
 
 Les contrôles et limites de cette livraison sont consignés dans `docs/VERIFICATION-0.6.4.md`.
 
-## Huit nouvelles feuilles — 0.7.0
+## Huit nouvelles feuilles — 0.7.1
 
 Les maquettes validées du 16 octobre habillent les huit écrans. Les motifs fleuris, dessins et couches de patine restent décoratifs ; les textes et actions sont sélectionnables. Le catalogue de 150 fiches est conservé. Les secrets de fabrication sont des notes personnelles enregistrables et modifiables, incluses dans les sauvegardes V2. La reprise en cuisine conserve son étape et son minuteur. Les convives choisis sont enregistrés par recette.
 
-Contrôles : `npm test` (134 tests), `npm run check`. Voir `docs/VERIFICATION-0.7.0.md`. Pour examiner les largeurs de 360, 390 et 430 px : `controle-maquettes.html`.
+Contrôles : `npm test` (136 tests), `npm run check`. Voir `docs/VERIFICATION-0.7.0.md`. Pour examiner les largeurs de 360, 390 et 430 px : `controle-maquettes.html`.

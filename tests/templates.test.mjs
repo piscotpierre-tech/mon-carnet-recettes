@@ -62,3 +62,18 @@ test('le contrôleur garde une récolte non pesée et une observation, puis retr
  await go('#plante/example-fraisier');const observation=nodes.get('#observation-form');observation.elements={soil:{value:'Humide'},text:{value:'Trois fruits commencent à rougir.'},date:{value:'2026-10-15'}};await observation.onsubmit({preventDefault(){},target:observation});assert.ok(current().observations.some(o=>o.text==='Terre humide. Trois fruits commencent à rougir.'));
  const harvest=nodes.get('#harvest-form');harvest.elements={quantity:{value:''},unit:{value:'g'},date:{value:'2026-10-15'}};await harvest.onsubmit({preventDefault(){},target:harvest});const row=current().harvests.at(-1);assert.equal(row.quantity,null);await click('harvest-reserve',row.id);const r=current().reserves.find(r=>r.harvestId===row.id);assert.ok(r);assert.equal(r.quantity,null);await go('#reserve/'+r.id);assert.match(main.innerHTML,/Quantité non renseignée/);assert.ok(!main.innerHTML.includes('La page ne peut pas s’ouvrir'));
 });
+
+test('les secrets sont une vraie page et un formulaire enregistrable sans exemples personnels',async()=>{
+ await go('#secrets');assert.match(main.innerHTML,/data-screen="MES SECRETS"/);assert.match(main.innerHTML,/Aucun secret enregistré/);
+ await go('#secret-nouveau');assert.match(main.innerHTML,/id="secret-form"/);
+ const f=nodes.get('#secret-form');const values={title:'Mon secret de contrôle',recipeReference:'Ma référence personnelle',waterCl:'12.5',sugarG:'40',perfumes:'Vanille',preparationNotes:'Essai à observer',date:'2026-10-16',lot:'TEST',trials:'Première note',tips:'Mon geste',source:'Mon carnet, page 2'};
+ f.elements=Object.fromEntries(Object.entries(values).map(([k,value])=>[k,{value}]));await f.onsubmit({preventDefault(){},target:f});
+ const secret=current().secrets[0];assert.equal(secret.waterMl,125);assert.equal(secret.sugarG,40);
+ await go('#secret/'+secret.id);assert.match(main.innerHTML,/12,5 cl/);assert.match(main.innerHTML,/Mon geste/);
+ await go('#secret-modifier/'+secret.id);assert.match(main.innerHTML,/Mon secret de contrôle/);
+});
+test('reprendre la même recette conserve l’étape et le minuteur sans les réinitialiser',async()=>{
+ await go('#recette/CDR-R001');await click('cook','CDR-R001');await go('#cuisine');await click('next-step');
+ const before=current().cooking;await go('#recette/CDR-R001');await click('cook','CDR-R001');
+ assert.deepEqual(current().cooking,before);
+});

@@ -20,7 +20,7 @@ export function art(name,classes=''){
 // These windows contain decoration only; labels and controls are live HTML.
 let ornamentId=0;
 export function flowers(){return `<span class="flowers atelier-flowers" aria-hidden="true"></span>`;}
-export function coverDecor(){return `<div class="cover-decoration" aria-hidden="true"><img class="cover-top" src="./assets/atelier/cover-top.webp" alt=""><img class="cover-bottom" src="./assets/atelier/cover-bottom.webp" alt=""></div>`;}
+export function coverDecor(){return `<div class="cover-decoration" aria-hidden="true"><img class="cover-top" src="./assets/atelier/cover-top.webp" alt=""><img class="cover-bottom" src="./assets/atelier/cover-bottom.webp" alt=""><img class="cover-left" src="./assets/atelier/cover-left.webp" alt=""><img class="cover-right" src="./assets/atelier/cover-right.webp" alt=""><img class="cover-foot" src="./assets/atelier/cover-foot.webp" alt=""></div>`;}
 const traces={
  wine:`<path d="M15 48c-9-6-20 6-15 14s19 5 18-3S18 51 15 48ZM8 90c-12-5-11 18-1 21s17-11 12-15Z"/><circle cx="26" cy="79" r="3"/><circle cx="4" cy="134" r="5"/><circle cx="20" cy="148" r="2"/>`,
  coffee:`<path d="M8 68C-18 28 31-8 62 15S91 64 59 85M14 69C-10 37 27 3 55 19S81 62 58 79" fill="none" stroke="currentColor" stroke-width="3"/><path d="m42 12 3 5m12 66 1 5" fill="none" stroke="currentColor"/>`,
