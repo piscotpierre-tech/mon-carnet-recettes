@@ -1,0 +1,16 @@
+[
+  {
+    "sourcePdf": "Mon_carnet_50_entrees_salades_V1.pdf",
+    "sha256": "bfc60a3c2d08a2933b85313c961cab453df53fa940f28a6437b2641615edb231",
+    "recipes": 50,
+    "independentlyCheckedQuantities": 419,
+    "steps": 200
+  },
+  {
+    "sourcePdf": "Mon_carnet_50_desserts_V1.pdf",
+    "sha256": "db58f52366cd96efedf8c4acd60bf492b81e1819badaf47c686c52d0978b84f1",
+    "recipes": 50,
+    "independentlyCheckedQuantities": 293,
+    "steps": 201
+  }
+]

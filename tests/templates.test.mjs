@@ -30,14 +30,20 @@ test('le contrôleur de création conserve les saisies d’un formulaire simulé
  await f.listeners.submit({preventDefault(){}});const saved=current().recipes.find(r=>r.title===fields.title);assert.ok(saved);assert.equal(saved.ingredients[0].quantity,500);assert.equal(saved.material,'Une casserole');assert.equal(saved.cookMinutes,null);assert.equal(saved.notes,fields.notes);await go('#recette/'+saved.id);assert.ok(main.innerHTML.includes(fields.title));
 });
 
-test('les 50 recettes intégrées ouvrent une fiche et un mode cuisine sans erreur de contrôleur',async()=>{
- const recipes=current().recipes.filter(r=>r.editorial);assert.equal(recipes.length,50);
+test('les 150 recettes intégrées ouvrent une fiche et un mode cuisine sans erreur de contrôleur',async()=>{
+ const recipes=current().recipes.filter(r=>r.editorial);assert.equal(recipes.length,150);
  for(const r of recipes){await go('#recette/'+r.id);assert.ok(main.innerHTML.includes(r.title.replaceAll('&','&amp;').replaceAll('\"','&quot;')),r.id);assert.match(main.innerHTML,/La petite touche du chef/);assert.ok(nodes.get('#recipe-method').innerHTML.includes('<ol class="steps">'));await click('cook',r.id);await go('#cuisine');assert.match(main.innerHTML,/data-screen="À VOS TABLIERS !"/,r.id);assert.match(main.innerHTML,/Ingrédients de la recette/);}
 });
-test('la liste affiche les 50 titres et les catégories filtrent les 5 entrées et 5 desserts',async()=>{
- await go('#recettes');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,51);
- await click('category','Entrées');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,5);
- await click('category','Desserts');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,5);
+test('la liste affiche les 150 titres et les catégories filtrent les 55 entrées et 55 desserts',async()=>{
+ await go('#recettes');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,151);
+ await click('category','Entrées');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,55);
+ await click('category','Desserts');assert.equal((nodes.get('#recipe-list').innerHTML.match(/class="number"/g)||[]).length,55);
+});
+
+test('les nouveaux contrôleurs affichent le froid séparé et ajustent les doses et précisions pour deux',async()=>{
+ await go('#recette/CDR-D030');assert.match(main.innerHTML,/Repos \/ froid : <strong>1 h 30 min/);assert.ok(!main.innerHTML.includes('en préparant les garnitures pendant la cuisson'));assert.match(nodes.get('#recipe-method').innerHTML,/Monter quatre millefeuilles/);
+ await go('#recette/CDR-D019');nodes.get('#target-servings').oninput({target:{value:'2',validity:{valid:true}}});assert.match(nodes.get('#recipe-ingredients').innerHTML,/15 cl/);assert.match(nodes.get('#recipe-ingredients').innerHTML,/dont 100 ml/);assert.match(nodes.get('#recipe-method').innerHTML,/Chauffer 50 ml/);await click('cook','CDR-D019');await go('#cuisine');assert.equal(current().cooking.servings,2);assert.match(main.innerHTML,/Chauffer 50 ml/);assert.match(main.innerHTML,/dont 100 ml/);
+ await go('#recette/CDR-E017');nodes.get('#target-servings').oninput({target:{value:'8',validity:{valid:true}}});assert.match(nodes.get('#recipe-ingredients').innerHTML,/environ 2 œufs/);assert.match(nodes.get('#recipe-method').innerHTML,/8 crêpes/);
 });
 
 test('les deux fiches de conserve et les deux guides du jardin se lisent dans les contrôleurs',async()=>{

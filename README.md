@@ -1,8 +1,12 @@
-# Mon carnet de recettes — 0.5.1
+# Mon carnet de recettes — 0.6.0
 
 Couverture issue du véritable cahier de Pierre, sommaire en cinq chapitres, papier patiné et minuteur à molette manipulable.
 
 Les 50 recettes fournies par Pierre (40 assiettes, 5 entrées, 5 desserts) sont intégrées : ingrédients par composant, états de pesée, méthode, temps indicatifs, matériel, conseils de cuisson et astuces du chef.
+
+Les deux recueils supplémentaires de Pierre ajoutent 50 entrées et salades et 50 desserts : 150 fiches au total, dont 40 assiettes, 55 entrées et 55 desserts. Les nouvelles recettes sont prévues pour quatre convives, avec 712 ingrédients et 401 étapes transcrits des PDF. Les poids égouttés et les œufs sans coquille restent précisés ; les temps de repos et de froid sont affichés séparément. Les mesures sont déjà françaises dans les deux recueils et sont conservées sans conversion arbitraire.
+
+L’ajout des deux recueils est unique, sans remplacement des fiches personnelles. Les quantités totales et les nombres de portions suivent les convives ; les températures, épaisseurs et garnitures indiquées par portion gardent leur valeur. Les nouvelles fiches se retrouvent dans les catégories, la recherche, le mode cuisine, les menus, les courses et les liens depuis le jardin ou le garde-manger.
 
 L’ajout s’effectue une seule fois au prochain chargement du carnet. Les exemples intacts sont complétés en conservant leurs identifiants ; les fiches personnelles ou modifiées restent préservées. Les favoris, photos, menus et préparations en cours sont conservés. Les sauvegardes V1/V2 restent lisibles.
 
@@ -33,3 +37,5 @@ La fiche courante de confiture s’appuie sur une recette Larousse pesée : 1 kg
 Les récoltes acceptent une quantité pesée, comptée ou inconnue. Elles peuvent rejoindre une réserve une seule fois. Les lots gardent la version de leur méthode et des notes sur le matériel réellement employé. Chaque pot a son ouverture, sa quantité connue ou son suivi par pot, et son journal de prélèvements annulables. L’annulation conserve la date d’ouverture. Les menus ne prélèvent rien automatiquement dans les réserves.
 
 Validation 0.5.1 : 103 tests automatisés réussis et contrôles statiques réussis. Voir `docs/VERIFICATION-0.5.1.md`. Les anciennes sauvegardes restent acceptées ; l’export conserve les nouvelles données. Aucun contrôle visuel mobile n’a été exécuté dans ce lot.
+
+Validation 0.6.0 : 116 tests automatisés réussis, contrôles statiques et copie autonome vérifiés. Les 712 quantités et unités ont été recoupées directement dans les deux PDF. Voir `docs/VERIFICATION-0.6.0.md`. Aucun contrôle visuel en navigateur ou sur téléphone n’a été exécuté pour cette version.

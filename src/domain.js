@@ -1,5 +1,5 @@
 export const APP = 'mon-carnet-recettes';
-export const APP_VERSION = '0.5.1';
+export const APP_VERSION = '0.6.0';
 export const SCHEMA_VERSION = 2;
 export const LIMITS = Object.freeze({recipes: 1000, photoBytes: 2 * 1024 * 1024, allPhotosBytes: 30 * 1024 * 1024, backupBytes: 45 * 1024 * 1024});
 export const CATEGORIES = ['Assiettes et plats', 'Entrées', 'Desserts', 'Garnitures', 'Sauces et bases'];
@@ -59,6 +59,7 @@ export function validateRecipe(recipe) {
     const e=recipe.editorial;if(!plain(e))fail('Contenu éditorial invalide.');identifier(e.sourceId);int(e.sourceNumber,1,50,'Numéro du catalogue');
     for(const key of ['family','season','difficulty'])str(e[key],100,'Repère de recette');
     for(const key of ['plateExplanation','chefTip','allergens'])str(e[key],4000,'Texte de recette');
+    if(e.collectionId!==undefined)identifier(e.collectionId);if(e.sourcePage!==undefined)int(e.sourcePage,1,200,'Page du recueil');if(e.restMinutes!==undefined)int(e.restMinutes,0,1440,'Repos / froid');
     int(e.totalMinutes,0,1440,'Temps total');if(typeof e.testedInKitchen!=='boolean')fail('Statut d’essai invalide.');
   }
   for(const key of ['prepMinutes','cookMinutes'])if(recipe[key]!==undefined&&recipe[key]!==null)int(recipe[key],0,1440,'Durée');

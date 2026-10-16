@@ -1,4 +1,4 @@
-import {emptyNotebook, validateNotebook, migrateNotebook} from './domain.js?v=0.5.1';
+import {emptyNotebook, validateNotebook, migrateNotebook} from './domain.js?v=0.6.0';
 
 export class NotebookStore {
   constructor({factory = globalThis.indexedDB, scope = globalThis.location?.pathname.replace(/[^/]*$/, '') ?? '/'} = {}) {
